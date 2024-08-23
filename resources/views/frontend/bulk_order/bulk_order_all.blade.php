@@ -1,0 +1,571 @@
+@extends('frontend.master')
+
+@section('content')
+<section class="pageTitle"
+	style="background-image:url({{static_asset('assets_web/img/orderbanner.png')}})">
+	<div class="container"> </div>
+</section>
+<!--top banner end -->
+
+<div class="service-pros animated animate__fadeInUp wow product-categorys ulines-dps-para ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 breadmcrumsize">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url('')}}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> All Categories Bulk Order</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-5 pb-5 elec-tb productcategoryd allbulkcategory">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="tab_list_group bhoechie-tab-menu">
+                    <div class="owl-carousel owl-theme category-slide showcatlistnew">
+                        @foreach ($parent_categories as $key => $category)
+                            <div class="item">
+                                <div class="fancybox thumb1">
+                                    <input type="radio" id="{{$category->id}}" value="{{$category->id}}" name="first_cat_radio" {{  $counter == 1 ? "checked" : "" }} class="first_category">
+                                    <label class="tablskd {{  $counter == 1 ? "active" : "" }}" data-value="{{$category->id}}" for="{{$category->id}}"><img src="{{ uploaded_asset($category->icon) }}" alt="{{ $category->name}}">
+                                        <h6>{{ $category->getTranslation('name') }}</h6>
+                                    </label>  
+                                </div>
+                            </div>
+                            @php $counter++ @endphp
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <div class="brand_product tab-pane active" id="tab-electric1">
+                        <div class="head-cnt work-center text-left" style="margin-bottom:20px;">
+                            <div class="bounceIna">
+                                <div class="cards_sections bulk-order3">
+                                    <div class="container1">
+                                        <div class="card">
+
+                                            <!--All  Filter Start-->
+                                            <div class="card-header gutters-5">
+                                                <div class="row">
+                                                    <div class="col col-md-12 text-center text-md-left">
+                                                        <h5 class="mb-md-0 h6"
+                                                            style="text-align:left;line-height:40px !important;text-transform: uppercase;">
+                                                            All Categories Bulk Order</h5>
+                                                    </div>
+                                                </div>
+
+                                                <p class="para-dets">
+                                                    Make bulk orders easy and fast. Simply search the product you
+                                                    want to add, put in your desired quantity, and add to cart.
+                                                    Fewer clicks to check out! You can set quantity limits on
+                                                    individual products. The look and text of the form is
+                                                    customizable,
+                                                    too! Login to see prices by Wholesale Pricing Discount and
+                                                    products hidden by Wholesale Lock Manager.
+                                                </p>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div style="position:relative;width:100%;"> 
+                                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                                            <select name="second_category" class="second_category orderby1" aria-label="Shop order">
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div style="position:relative;width:100%;"> <i
+                                                                class="fa fa-angle-down" aria-hidden="true"></i>
+                                                            <select name="third_category" class="third_category orderby1" aria-label="Shop order">
+                                                               <option value="">Third Category</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div style="position:relative;width:100%;"> 
+                                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                                            <select name="brand" class="brand orderby1">
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div style="position:relative;width:100%;display:flex">
+                                                            <button class="reset apply-now" type="reset"
+                                                                style="background-color:#ff7713;margin-right:10px;">
+                                                                Reset
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="wof_top_bar">
+                                                    <div class="wof_sort_by_main_wrapper" style="white-space:nowrap;">
+                                                        <div class="wof_sort_by_button_wrapper"> 
+                                                            <span class="lbl_sort_by">Sort by&nbsp; &nbsp;
+                                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                                            </span> 
+                                                        </div>
+
+                                                        <div class="sort-by-dropdown-content" tabindex="-1" style="display: none;">
+                                                            <div class="sort-by-option title-ascending-sort-container">
+                                                                <input type="radio" class="sort_by title-ascending-sort"
+                                                                    name="sort_by" value="default">
+                                                                <label for="title-ascending-sort">Default</label>
+                                                            </div>
+                                                            <div class="sort-by-option title-ascending-sort-container">
+                                                                <input type="radio" class="sort_by title-ascending-sort"
+                                                                    name="sort_by" value="newest">
+                                                                <label for="title-ascending-sort">Newest</label>
+                                                            </div>
+                                                            <div class="sort-by-option title-descending-sort-container">
+                                                                <input type="radio" class="sort_by title-descending-sort" 
+                                                                    name="sort_by" value="oldest">
+                                                                <label for="title-descending-sort">Oldest</label>
+                                                            </div>
+                                                            <div class="sort-by-option created-ascending-sort-container">
+                                                                <input type="radio" class="sort_by created-ascending-sort"
+                                                                    name="sort_by" value="price-asc">
+                                                                <label for="created-ascending-sort">Price low to high</label>
+                                                            </div>
+                                                            <div class="sort-by-option created-descending-sort-container">
+                                                                <input type="radio" class="sort_by created-descending-sort" 
+                                                                    name="sort_by" value="price-desc">
+                                                                <label for="created-descending-sort">Price High to low</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="text" placeholder="Search by product name..."
+                                                        class="wof_txt_search" id="keywords" name="keywords" autocomplete="off">
+                                                    <div class="wof_search_icon"> 
+                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                    </div>
+
+                                                    <div class="typed-bulk-search-box stop-propagation document-click-d-none d-none bg-white rounded shadow-lg position-absolute left-0 top-100 w-100" style="min-height: 200px;">
+                                                        <div class="search-bulk-preloader absolute-top-center">
+                                                            <div class="dot-loader"><div></div><div></div><div></div></div>
+                                                        </div>
+                                                        <div class="search-nothing d-none p-3 text-center fs-16">
+                                    
+                                                        </div>
+                                                        <div id="search-content" class="text-left">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="file-input">
+                                                        <input type="file" id="file" class="file">
+                                                        <label for="file">Upload Parchi</label>
+                                                    </div>
+                                                    <div class="wof_cart_widget_wrapper"
+                                                        style=" background-color: #1274c0; border-radius: 5px; border: none;">
+                                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"
+                                                            style="color: #fff;   padding-right: 5px;"></i>
+                                                        <span class="lbl_cart_total" style="color:#fff;">0</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="wof-collection-main-wrapper">
+                                                    <div class="collection_container">
+                                                        <div class="lbl_filter_collection_header">Collections
+                                                        </div>
+                                                        <ul class="collections_wrapper">
+                                                            <li class="collection-filter active-collection-filter"
+                                                                value="all"> All Products </li>
+                                                            <li class="collection-filter" value="box-of-100"
+                                                                data-collection-id="400919494877">Box of 100</li>
+                                                            <li class="collection-filter" value="caps"
+                                                                data-collection-id="402443075805">Caps</li>
+                                                            <li class="collection-filter" value="locked-products"
+                                                                data-collection-id="400919625949">Locked Products
+                                                            </li>
+                                                            <li class="collection-filter" value="mugs"
+                                                                data-collection-id="402442911965">Mugs</li>
+                                                            <li class="collection-filter" value="pack-of-2"
+                                                                data-collection-id="400919658717">Pack of 2</li>
+                                                            <li class="collection-filter" value="polos"
+                                                                data-collection-id="402443043037">Polos</li>
+                                                            <li class="collection-filter" value="tote-bags"
+                                                                data-collection-id="402442846429">Tote Bags</li>
+                                                            <li class="collection-filter" value="tshirts"
+                                                                data-collection-id="402442977501">Tshirts</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--All  Filter End-->
+
+                                            <!-- Show All Product List Start-->
+                                            <div class="card-body">
+                                                <form method="post" action="{{route('add-all-bulk-product-to-cart')}}">
+                                                    @csrf
+                                                    <input type="text" name="category" id="first_category_value">
+                                                    <input type="text" name="types" value="all_category">
+                                                    <div class="table-crack-overflow">
+                                                        <table
+                                                            class="table aiz-table mb-0 footable footable-1 breakpoint-lg">
+                                                            <thead>
+                                                                <tr class="footable-header">
+                                                                    <th
+                                                                        style="  line-height:25px;     width: 35px;  padding-right: 0px;">
+                                                                        S. No.</th>
+                                                                    <th style="line-height:25px;    width: 70px;">
+                                                                        Product</th>
+                                                                    <th style="     width: 110px;   line-height: 25px;">
+                                                                        Item</th>
+                                                                    <th style="    width: 45px;">Price <br>(Per Piece)
+                                                                    </th>
+                                                                    <th style="   width: 45px;   line-height: 25px;">
+                                                                        Discount %</th>
+                                                                    <th style="   width: 40px;   line-height: 25px;">
+                                                                        <span>GST %</span>
+                                                                    </th>
+                                                                    <th style="position:relative;    width:60px;">
+                                                                        <div>Enter Qty.<br> (Piece)</div>
+                                                                        <div><img src="{{static_asset('assets_web/img/DownArrowTMT.gif')}}"
+                                                                                style="width: 9px;position: absolute;top: 27px;right: 19px;">
+                                                                        </div>
+                                                                    </th>
+                                                                    <th style="    width: 66px;"> Amount <span>
+                                                                            18%</span> GST Paid
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id='ckeckboxselect'>
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <table style="width: 100%; margin: 0px;border: 1px solid #ccc;border-top: none;">
+                                                        <tbody>
+                                                            <tr style="width:100%;">
+                                                                <td style="width:40%; text-align:left; font-size:12px; padding-left:10px;">
+                                                                    <!-- <span> Price Update Date : 04/Dec/2021 </span> <br> -->
+                                                                    <div style="margin:10px;"></div>
+                                                                    <div> 
+                                                                        <b>Note : </b>To make a Quotation, you first need to 
+                                                                        <a href="{{url('login')}}">login</a> 
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width:60%;  margin:10px 0px;">
+                                                                    <div class="snipcart-details">
+																	<a href="{{route('bulk_order_cart', ['type' => 'all_category'])}}"> 
+                                                                            <input type="button" value="GO TO CART" id="addpiece" class="button active2" style="padding:12px 50px;">
+																	</a>
+																	 {{-- <input type="submit" value="GO TO CART" id="addpiece" class="button active2" style="padding:12px 50px;"> --}}
+                                                                    </div>   
+                                                                    <div class="snipcart-details"> 
+                                                                        <a> 
+                                                                            <input type="submit" value="ADD CATEGORIES" id="addpiece" class="button" style="padding:12px 50px;">
+                                                                        </a> 
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+
+                                            </div>
+                                            <!-- Show All Product List End-->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Side Data Start  -->
+            <div class="d-none d-xl-block col-md-3 col-wd-2gdot5">
+                <div class="md-hide">
+                    <div class="deliverybox">
+                        <span class="title"><i class="fa fa-map-marker"></i> Delivery by 24th April</span>
+                        <input type="number" name="pincode" value="670002" placeholder="Enter Pincode">
+                        <a href="#" class="change">Change</a>
+                        <ul class="row delivery">
+                            <li class="col-md-4">
+                                <img src="{{static_asset('assets_web/img/shipping.svg')}}" class="loadimg delimg" alt="">
+                                <span class="name">Priority</span>
+                                <span class="status">Delivery</span>
+                            </li>
+                            <li class="col-md-4">
+                                <img src="{{static_asset('assets_web/img/cancellation.svg')}}" class="loadimg delimg" alt="">
+                                <span class="name">Cancellation</span>
+                                <span class="status">Allowed</span>
+                            </li>
+                        </ul>
+                        <div class="details">
+                            <p style="display: none;"><i class="fa fa-inr" aria-hidden="true"></i> Cash on Delivery
+                                Available</p>
+                            <p><i class="fa fa-inr" aria-hidden="true"></i> Online Payment Available</p>
+                        </div>
+                    </div>
+                    <!-- deliverybox -->
+                </div>
+
+                <div class="cartPointsPan">
+                    <div class="pointsWrap">
+                        <div class="icons"><img src="{{static_asset('assets_web/img/iconcome1.svg')}}" alt="Lowest Price Guaranteed"></div>
+                        <div class="pointLabel">Lowest Price Guaranteed</div>
+                    </div>
+                    <div class="pointsWrap">
+                        <div class="icons"><img src="{{static_asset('assets_web/img/iconcome2.svg')}}" alt="Worldwide Delivery"></div>
+                        <div class="pointLabel">Worldwide Delivery</div>
+                    </div>
+                    <div class="pointsWrap">
+                        <div class="icons"><img src="{{static_asset('assets_web/img/iconcome3.svg')}}" alt="Easily Track your Order"></div>
+                        <div class="pointLabel">Easily Track your Order</div>
+                    </div>
+                    <div class="pointsWrap">
+                        <div class="icons"><img src="{{static_asset('assets_web/img/iconcome4.svg')}}" alt="Buy Products on Credit"></div>
+                        <div class="pointLabel">Buy Products on Credit</div>
+                    </div>
+                    <div class="scheduledCallback">
+                        <div><img src="{{static_asset('assets_web/img/iconcome5.svg')}}" alt="scheduleCallback"></div>
+                        <div>
+                            <div>Any Confusion "No worries"</div>
+                            <button type="button" class="btn btn-default">Request A Call Back</button>
+                            <div class="hide">
+                                <div class="modal">
+                                    <div class="modalInnerContent callbackModal m">
+                                        <div class="modalHeader">
+                                            <div class="modalTitle">Request A Call Back</div> <button type="button"
+                                                class="btn close"> <svg width="14" height="14" viewBox="0 0 24 24"
+                                                    style="display: inline-block; vertical-align: middle;">
+                                                    <path
+                                                        d="M14.6,12l8.8-8.8C23.8,2.8,24,2.4,24,1.9s-0.2-1-0.5-1.3c-0.7-0.7-1.9-0.7-2.6,0L12,9.4L3.2,0.6c-0.7-0.7-1.9-0.7-2.6,0s-0.7,1.9,0,2.6L9.4,12l-8.8,8.8c-0.7,0.7-0.7,1.9,0,2.6s1.9,0.7,2.6,0l8.8-8.8l8.8,8.8c0.4,0.4,0.8,0.5,1.3,0.5s1-0.2,1.3-0.5c0.4-0.4,0.5-0.8,0.5-1.3s-0.2-1-0.5-1.3L14.6,12z"
+                                                        fill="#000"></path>
+                                                </svg> </button>
+                                        </div>
+                                        <div class="modalContent"><iframe title="Contact form" frameborder="0" src="#2"
+                                                style="height: 650px; width: 99%; border: none;"></iframe>
+                                        </div>
+                                    </div>
+                                    <span role="button" tabindex="0" class="backdropOverlay"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Enquiry -->
+                @include('frontend.partials.category_enquiry_form')
+            </div>
+            <!-- Right Side Data End  -->
+        </div>
+    </div>
+</div>
+
+@include('frontend.partials.why_buy_product_section')
+
+
+@endsection
+
+@section('script')
+<script>
+	$("input[type=checkbox]").on("click", function () {
+		var product_id = $(this).data("id");
+		var product_code = $(this).data("code");
+		if ($(this).is(":checked")) {
+			$("#product-item-" + product_id).css("border", "#d96557 3px solid");
+			$("#product-" + product_id).val(product_code);
+		}
+		else if ($(this).is(":not(:checked)")) {
+			$("#product-item-" + product_id).css("border", "none");
+			$("#product-" + product_id).val("");
+		}
+	});
+
+	$(document).ready(function () {
+        var default_first_category_value = $("input[name='first_cat_radio']:checked").val();;
+        $('#first_category_value').val(default_first_category_value);
+        getSecondCategoryList(default_first_category_value);
+
+        // filter by First category filter
+        // bind a function to the change event
+        $(".first_category").change(function(){ 
+            if( $(this).is(":checked") ){ // check if the radio is checked
+                var first_category_val = $(this).val(); // retrieve the value
+                console.log("First Category value : "+first_category_val);
+                $('#first_category_value').val($(this).val());
+                var first_category = $('#first_category_value').val();
+                getSecondCategoryList(first_category);
+                // onChageLoadData(first_category);
+            }
+        });
+
+        // filter by Second category filter
+		$('.second_category').change(function() {
+            var second_category = $('.second_category').val();
+            getThirdCategoryList(second_category)
+			get_common_filter_function();
+		});
+
+		// filter by third category filter
+		$('.third_category').change(function() {
+			get_common_filter_function();
+		});
+
+        // filter by Brand filter
+		$('.brand').change(function() {
+			get_common_filter_function();
+		});
+
+        // filter by sort by filter 
+		$('.sort_by').change(function() {
+			get_common_filter_function();
+		});
+
+		// filter/Search by Product Name
+		$('#keywords').on('keyup', function(){
+			var searchKey = $('#keywords').val();
+			if(searchKey.length > 3){
+				get_common_filter_function();
+			}
+        });
+
+        $('.reset').on('click', function(e){
+            reset_value();
+        });
+
+        // Return checked Brand in array 
+        function get_brand_array(){
+            var brand_arr = [];
+            $('.brand:checked').each(function () {
+                brand_arr[i++] = $(this).val();
+            });
+            brand_arr = brand_arr.filter(function( element ) {
+                return element !== undefined;
+            });
+            return brand_arr;
+        }
+
+		// Get all variable value
+		function get_common_filter_function(){
+            var sort_by = $( 'input[name=sort_by]:checked' ).val();
+            var first_category = $('#first_category_value').val();
+            var second_category = $('.second_category').val();
+			var third_category = $('.third_category').val();
+			var brand = $('.brand').val();
+            var searchKey = $('#keywords').val();
+			onChageLoadData(first_category, second_category, third_category, brand, sort_by, searchKey);
+        }
+
+        function reset_value(){
+            var sort_by = $( 'input[name=sort_by]').prop('checked', false);
+            var first_category = $('#first_category_value').val();
+            var second_category = $('.second_category').val("");
+			var third_category = $('.third_category').val("");
+			var brand = $('.brand').val("");
+            var searchKey = $('#keywords').val("");
+            onChageLoadData(first_category);
+        }
+
+		// common ajax for fiter data by sort by and third category and search keywords wise
+		function onChageLoadData(first_category, second_category, third_category, brand, sort_by, searchKey){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+
+			jQuery.ajax({
+				url: "{{ route('get_filter_all_bulk_order_data') }}",
+				method: "get",
+				data: {
+                    first_category: first_category,
+					second_category: second_category,
+					third_category: third_category,
+					brand: brand,
+					sort_by: sort_by,
+					searchKey: searchKey,
+				},
+				success: function(result){
+					console.log (result);
+					if(result.status == true){
+					    $('#ckeckboxselect').html(result.data.products);
+                        $('.brand').html(result.data.filter_brand_data);
+
+					}
+				}
+			});
+		}
+
+        //Get Second category list and show in html format
+        function getSecondCategoryList(first_category){
+            console.log("I am second category : "+first_category);
+            $.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+
+			jQuery.ajax({
+				url: "{{ route('get_second_category_list') }}",
+				method: "get",
+				data: {
+					first_category: first_category,
+				},
+				success: function(result){
+					// console.log (result);
+					if(result.status == true){
+					    $('.second_category').html(result.second_ctegory_list);
+					    // $('.brand').html(result.brand_list);
+					}
+				}
+			});
+        }
+
+        //Get Third category list and show in html format
+        function getThirdCategoryList(second_category){
+            $.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+
+			jQuery.ajax({
+				url: "{{ route('get_third_category_list') }}",
+				method: "get",
+				data: {
+					second_category: second_category,
+				},
+				success: function(result){
+					// console.log (result);
+					if(result.status == true){
+					    $('.third_category').html(result.data);
+					}
+				}
+			});
+        }
+
+	});
+
+	var expanded = false;
+	function showCheckboxes() {
+		var checkboxes = document.getElementById("checkboxes");
+		if (!expanded) {
+			checkboxes.style.display = "block";
+			expanded = true;
+		} else {
+			checkboxes.style.display = "none";
+			expanded = false;
+		}
+	}
+
+</script>
+@endsection

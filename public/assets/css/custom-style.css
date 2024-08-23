@@ -1,0 +1,159 @@
+/*your custom css goes here*/
+
+.custom-fa-icon {
+    color: #ff5b08;
+    font-size: 16px;
+}
+
+.list-unstyled li {
+    margin: 0 5px !important;
+    padding: 0 !important;
+}
+
+.list-unstyled .badge-primary {
+    background-color: #ff5b08;
+    padding: 5px 7px;
+    color: #fff;
+    font-weight: 600;
+    margin-left: 2px;
+    font-size: 10.4px;
+}
+
+.list-unstyled li a {
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+}
+
+#basicDropdownHoverInvoker {
+    display: flex;
+}
+
+/* drop down add to cart  */
+
+#basicDropdownHover {
+    padding: 0;
+    border-top: 1px solid #ccc !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#basicDropdownHover>ul {
+    padding: 0 !important;
+}
+
+#basicDropdownHover .list-unstyled .border-bottom {
+    margin: 0 !important;
+    background: #fff;
+    border-radius: 7px;
+    color: #000;
+    font-size: 15px;
+    font-weight: 600;
+
+}
+
+#basicDropdownHover .list-unstyled .list-unstyled .img-fluid {
+    max-width: 60px;
+    height: 60px;
+}
+
+.custom-heading {
+    font-size: 13px;
+    font-weight: 600 !important;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #000 !important;
+}
+
+.custom-heading+.custom-price-span {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.custom-border {
+    border-color: #e2e5ec !important;
+    width: 100%;
+}
+
+ul.list-unstyled.row.mx-n2 {
+    width: 100%;
+    margin: 0 !important;
+    padding: 10px;
+}
+
+.custom-cross {
+    height: 66px;
+    font-size: 11px;
+    font-weight: 100 !important;
+    color: #919eab;
+}
+
+.custom-height {
+    height: 300.78px;
+    width: 320px;
+    margin: auto;
+    overflow-y: scroll;
+}
+
+.custom-height::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+.dropdown-menu {
+    top: 180%;
+}
+
+.custom-viewcart {
+    font-size: 13px;
+    font-weight: 500;
+    color: #ff5b08 !important;
+    border-radius: 3px;
+    padding: 0.416rem 1rem;
+    background-color: rgba(255, 91, 8, 0.15);
+}
+
+.custom-viewcart:hover {
+    color: #fff !important;
+    background: #ff5b08 !important;
+    box-shadow: none !important;
+}
+
+.custom-total {
+    font-size: 15px;
+    color: #212529;
+    font-weight: 600;
+}
+
+.custom-subtotal {
+    opacity: 0.60;
+    font-size: 15px;
+}
+
+/* drop down add to cart  */
+
+/* top 10 brands slider */
+
+.slick-slide img {
+    display: block;
+    margin: auto;
+    height: 80px;
+}
+
+.link-hover__brand {
+    height: 80px;
+    margin: 10px 0px;
+    display: block;
+    opacity: .5;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+    width: 100px;
+    margin: auto;
+}
+
+.custom_shop-slider {
+    padding: 20px;
+}
+
+/* top 10 brands slider */
