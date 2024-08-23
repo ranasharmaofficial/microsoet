@@ -39,7 +39,7 @@
                            <a href="#">
                            <img src="{{ asset('public/assets_web/images/laptop-screen (1).png')}}" alt="">
                            <p>Laptop</p>
-                           </a> 
+                           </a>
                        </div>
                      </div>
                      <div class="col-xl-6 col-md-6 p-0 m-0">
@@ -118,7 +118,7 @@
                                     alt="..." class="banner-slider-n">
                             </div>
 							@endforeach
-                             
+
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
                             data-bs-slide="prev">
@@ -135,14 +135,14 @@
 				@endif
                 <div class="col-xl-4 ratio_65">
                     <div class="row g-4">
-					
+
                         <div class="col-xl-6 col-md-6">
                             <div class="home-contain text-center">
                                 <a href="#"><img src="{{ asset('public/assets_web/images/right-t.png') }}"
                                         alt="" class="right-side-banner"> </a>
                             </div>
                         </div>
-						
+
                         <div class="col-xl-6 col-md-6">
                             <div class="home-contain text-center">
                                 <a href="#">
@@ -1657,8 +1657,8 @@
                             </a>
                         </div>
                     </div>
-                     
-                                
+
+
 
                       {{-- static commented by roni  --}}
                     <div class="title d-block">
@@ -1761,9 +1761,9 @@
                                     </div>
                                 </div>
                             </div>
-							
-							
-							
+
+
+
                             <div>
                                 <div class="row m-0">
                                     <div class="col-12 px-0">
@@ -2119,15 +2119,15 @@
                             </div>
                         </div>
                     </div>
-                    
-					 
-		 
+
+
+
 
 					@include('frontend.partials.home_prducts_rana')
-					
-							
-					
-					
+
+
+
+
 					<div class="title d-block">
                         <h2>All product</h2>
                         <span class="title-leaf">
@@ -2864,7 +2864,7 @@
       });
 
     </script> --}}
-    
+
     <div class="container mx-auto p-6 rounded-lg mb-10">
     <div class="heading text-center mb-6 capitalize" id="yojnaCat">
         <!-- Categories will be appended here -->
@@ -2876,313 +2876,6 @@
 
 <hr class="bg-gray-300 h-1 rounded-xl">
 
-{{-- <script>
-    $(document).ready(function() {
-        let categories = [];
-
-        // Function to fetch and display categories
-        let callingYojnaCat = () => {
-            return $.ajax({
-                type: "GET",
-                url: "{{ route('yojna.category.index') }}",
-                success: function(response) {
-                    categories = response.data;
-                    let catContainer = $("#yojnaCat");
-                    catContainer.empty();
-                    categories.forEach((category) => {
-                        catContainer.append(`  
-                            <div class="title d-block category-title" data-cat-id="${category.id}">
-                                <h2>${category.name}</h2>
-                                <span class="title-leaf">
-                                    <svg class="icon-width">
-                                        <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
-                                    </svg>
-                                </span>
-                                <p>A virtual assistant collects the products from your list</p>
-                            </div>
-
-                            <div class="product-border overflow-hidden wow fadeInUp">
-                                <div class="product-box-slider no-arrow category-group" id="category-${category.id}>
-                                </div>
-                            </div>
-
-                        `);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-        };
-
-        // Function to fetch and display yojnas
-        let callingYojna = () => {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('yojna.index') }}",
-                success: function(response) {
-                    let yojnas = response.data;
-
-                    // Clear previous yojnas and hide empty categories
-                    $('.category-group').empty();
-                    $('.category-title').hide();
-
-                    // Append yojnas
-                    yojnas.forEach((yojna) => {
-                        let categoryGroup = $(`#category-${yojna.category_id}`);
-                        if (categoryGroup.length > 0) {
-                            categoryGroup.append(`
-                                <div>
-                                        <div class="row m-0">
-                                            <div class="col-12 px-0">
-                                                <div class="product-box">
-                                                    <div class="product-image">
-                                                        <a href="product-left-thumbnail.html">
-                                                            <img src="${{ uploaded_asset(${thumbnail_img}) }}"
-                                                                class="img-fluid blur-up lazyload" alt="">
-                                                        </a>
-                                                        <ul class="product-option">
-                                                            <li data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="View">
-                                                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                                    data-bs-target="#view">
-                                                                    <i data-feather="eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Compare">
-                                                                <a href="compare.html">
-                                                                    <i data-feather="refresh-cw"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Wishlist">
-                                                                <a href="wishlist.html" class="notifi-wishlist">
-                                                                    <i data-feather="heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="product-detail">
-                                                        <a href="product-left-thumbnail.html">
-                                                            <h6 class="name h-100">${yojna.name}, Intel Processor N200,
-                                                                21.45-inch (54.5 cm), FHD, 8GB DDR5, 512GB SSD, Intel UHD Graphics,
-                                                                720p HD Camera w/Privacy Shutter, Dual Speakers (Win 11, White, 4.17
-                                                                kg),
-                                                            </h6>
-                                                        </a>
-                                                        <h5 class="sold text-content">
-                                                            <span class="theme-color price">
-                                                                ₹${yojna.unit_price}</span>
-                                                            <del>
-                                                                30% Off</del>
-                                                        </h5>
-                                                        <div class="product-rating mt-sm-2 mt-1">
-                                                            <ul class="rating">
-                                                                <li>
-                                                                    <i data-feather="star" class="fill"></i>
-                                                                </li>
-                                                                <li>
-                                                                    <i data-feather="star" class="fill"></i>
-                                                                </li>
-                                                                <li>
-                                                                    <i data-feather="star" class="fill"></i>
-                                                                </li>
-                                                                <li>
-                                                                    <i data-feather="star" class="fill"></i>
-                                                                </li>
-                                                                <li>
-                                                                    <i data-feather="star"></i>
-                                                                </li>
-                                                            </ul>
-                                                            <h6 class="theme-color">In Stock</h6>
-                                                        </div>
-                                                        <div class="add-to-cart-box">
-                                                            <button class="btn btn-add-cart addcart-button">Add
-                                                                <span class="add-icon">
-                                                                    <i class="fa-solid fa-plus"></i>
-                                                                </span>
-                                                            </button>
-                                                            <div class="cart_qty qty-box">
-                                                                <div class="input-group">
-                                                                    <button type="button" class="qty-left-minus"
-                                                                        data-type="minus" data-field="">
-                                                                        <i class="fa fa-minus"></i>
-                                                                    </button>
-                                                                    <input class="form-control input-number qty-input"
-                                                                        type="text" name="quantity" value="0">
-                                                                    <button type="button" class="qty-right-plus"
-                                                                        data-type="plus" data-field="">
-                                                                        <i class="fa fa-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                            `);
-                            // Show category title if it has matching yojnas
-                            $(`.category-title[data-cat-id="${yojna.category_id}"]`).show();
-                        }
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-        };
-
-        // Fetch categories first, then fetch yojnas
-        callingYojnaCat().then(() => {
-            callingYojna();
-        });
-    });
-</script> --}}
-
-<script>
-    $(document).ready(function() {
-        let categories = [];
-
-        // Function to fetch and display categories
-        let callingYojnaCat = () => {
-            return $.ajax({
-                type: "GET",
-                url: "{{ route('home-calling-category') }}",
-                success: function(response) {
-                    categories = response.data;
-                    let catContainer = $("#yojnaCat");
-                    catContainer.empty();
-                    categories.forEach((category) => {
-                        catContainer.append(`  
-                            <div class="title d-block category-title" data-cat-id="${category.id}" style="display: none;">
-                                <h2>${category.name}</h2>
-                                <span class="title-leaf">
-                                    <svg class="icon-width">
-                                        <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
-                                    </svg>
-                                </span>
-                                <p>A virtual assistant collects the products from your list</p>
-                            </div>
-
-                            <div class="product-border overflow-hidden wow fadeInUp">
-                                <div class="product-box-slider no-arrow category-group" id="category-${category.id}">
-                                </div>
-                            </div>
-                        `);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-        };
-
-        // Function to fetch and display yojnas
-        let callingYojna = () => {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('home-calling-products') }}",
-                success: function(response) {
-                    let yojnas = response.data;
-
-                    // Clear previous yojnas and hide empty categories
-                    $('.category-group').empty();
-                    $('.category-title').hide();
-
-                    // Append yojnas
-                    yojnas.forEach((yojna) => {
-                        let categoryGroup = $(`#category-${yojna.category_id}`);
-                        if (categoryGroup.length > 0) {
-                            categoryGroup.append(`
-                                <div>
-                                    <div class="row m-0">
-                                        <div class="col-12 px-0">
-                                            <div class="product-box">
-                                                <div class="product-image">
-                                                    <a href="product-left-thumbnail.html">
-                                                        <img src="${yojna.thumbnail_img}" class="img-fluid blur-up lazyload" alt="">
-                                                    </a>
-                                                    <ul class="product-option">
-                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                                                                <i data-feather="eye"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                                                            <a href="compare.html">
-                                                                <i data-feather="refresh-cw"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                                                            <a href="wishlist.html" class="notifi-wishlist">
-                                                                <i data-feather="heart"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="product-detail">
-                                                    <a href="product-left-thumbnail.html">
-                                                        <h6 class="name h-100">${yojna.name}, Intel Processor N200, 21.45-inch (54.5 cm), FHD, 8GB DDR5, 512GB SSD, Intel UHD Graphics, 720p HD Camera w/Privacy Shutter, Dual Speakers (Win 11, White, 4.17 kg)</h6>
-                                                    </a>
-                                                    <h5 class="sold text-content">
-                                                        <span class="theme-color price">₹${yojna.unit_price}</span>
-                                                        <del>30% Off</del>
-                                                    </h5>
-                                                    <div class="product-rating mt-sm-2 mt-1">
-                                                        <ul class="rating">
-                                                            <li><i data-feather="star" class="fill"></i></li>
-                                                            <li><i data-feather="star" class="fill"></i></li>
-                                                            <li><i data-feather="star" class="fill"></i></li>
-                                                            <li><i data-feather="star" class="fill"></i></li>
-                                                            <li><i data-feather="star"></i></li>
-                                                        </ul>
-                                                        <h6 class="theme-color">In Stock</h6>
-                                                    </div>
-                                                    <div class="add-to-cart-box">
-                                                        <button class="btn btn-add-cart addcart-button">Add
-                                                            <span class="add-icon">
-                                                                <i class="fa-solid fa-plus"></i>
-                                                            </span>
-                                                        </button>
-                                                        <div class="cart_qty qty-box">
-                                                            <div class="input-group">
-                                                                <button type="button" class="qty-left-minus" data-type="minus" data-field="">
-                                                                    <i class="fa fa-minus"></i>
-                                                                </button>
-                                                                <input class="form-control input-number qty-input" type="text" name="quantity" value="0">
-                                                                <button type="button" class="qty-right-plus" data-type="plus" data-field="">
-                                                                    <i class="fa fa-plus"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            `);
-                            // Show category title if it has matching yojnas
-                            $(`.category-title[data-cat-id="${yojna.category_id}"]`).show();
-                        }
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-        };
-
-        // Fetch categories first, then fetch yojnas
-        callingYojnaCat().then(() => {
-            callingYojna();
-        });
-
-    });
-</script>
 
 
 @endsection
