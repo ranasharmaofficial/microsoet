@@ -3,13 +3,13 @@
 					$current_timestamp = strtotime(date('Y-m-d H:i:s'));
 				@endphp
 				
-				@if(get_setting('home_categories') != null) 
-				@php $home_categories = json_decode(get_setting('top10_categories')); @endphp
-				@foreach($home_categories as $key => $value)
-				@php $category = \App\Models\Category::find($value); @endphp
+				@if(get_setting('top10_brands') != null) 
+				@php $top10_brands = json_decode(get_setting('top10_brands')); @endphp
+				@foreach($top10_brands as $key => $value)
+				@php $brand = \App\Models\Brand::find($value); @endphp
 					<!--- Raana Products start -->
 					<div class="title d-block py-5">
-                        <h2>{{ $category->name }}</h2>
+                        <h2>{{ $brand->name }}</h2>
                         <span class="title-leaf">
                             <svg class="icon-width">
                                 <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
@@ -18,7 +18,7 @@
                         <p>A virtual assistant collects the products from your list rana sharma</p>
                     </div>
 					@php
-						$product_lists = App\Models\Product::where('category_id', $category->id)->where('published',1)->where('approved',1)->limit(10)->get();
+						$product_lists = App\Models\Product::where('published',1)->where('approved',1)->where('brand_id', $brand->id)->limit(10)->get();
 					@endphp
                     <div class="product-border overflow-hidden wow fadeInUp">
                         <div class="product-box-slider no-arrow">
@@ -26,7 +26,7 @@
 								@foreach($product_lists as $item)
 							
 								@php
-								 $product_url = route('product', $item->slug);
+								$product_url = route('product', $item->slug);
 								$item->cart_quantity = 0;
                                 $totalQty = 0; // Initialize total quantity
                                 if($item->stocks){
