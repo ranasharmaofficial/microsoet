@@ -106,7 +106,6 @@
 
                         <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="right-box-contain">
-                                <h6 class="offer-top">30% Off</h6>
                                 <h4 class="name">{{ $detailedProduct->name }}</h4>
 								<div class="product-rating custom-rate">
                                         <ul class="rating">
@@ -223,18 +222,18 @@
                                     <div class="cart_qty qty-box product-qty">
                                         <div class="input-group">
                                             <button type="button" class="qty-right-plus" data-type="plus" data-field="">
-                                                <i class="fa fa-plus"></i>
+                                                <i class="fa fa-minus"></i>
                                             </button>
                                             <input class="form-control input-number qty-input" type="text"
                                                 name="quantity" value="0">
                                             <button type="button" class="qty-left-minus" data-type="minus"
                                                 data-field="">
-                                                <i class="fa fa-minus"></i>
+                                                <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>
 
-                                    <button onclick="location.href = 'cart.html';"
+                                    <button onclick="location.href = '';"
                                         class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
                                 </div>
 
@@ -260,15 +259,14 @@
                                         <h4 class="text-content">Lollipop cake chocolate chocolate cake dessert jujubes.
                                             Shortbread sugar plum dessert powder cookie sweet brownie.</h4>
                                     </div>
-
+								@php $qty = 0;  foreach ($detailedProduct->stocks as $key => $stock) { $qty += $stock->qty; } @endphp
                                     <div class="product-info">
                                         <ul class="product-info-list product-info-list-2">
-                                            <li>Type : <a href="javascript:void(0)">Black Forest</a></li>
-                                            <li>SKU : <a href="javascript:void(0)">SDFVW65467</a></li>
-                                            <li>MFG : <a href="javascript:void(0)">Jun 4, 2022</a></li>
-                                            <li>Stock : <a href="javascript:void(0)">2 Items Left</a></li>
-                                            <li>Tags : <a href="javascript:void(0)">Cake,</a> <a
-                                                    href="javascript:void(0)">Backery</a></li>
+                                            <li>Category : <a href="javascript:void(0)">{{$detailedProduct->category->getTranslation('name') }}</a></li>
+                                            <li>Brand : {{ $detailedProduct->brand ? $detailedProduct->brand->getTranslation('name') : 'N/A' }}</li>
+                                            <li>Stock : <a href="javascript:void(0)">{{ $qty }} Items Left</a></li>
+                                            {{--<li>Tags : <a href="javascript:void(0)">Cake,</a> <a
+                                                    href="javascript:void(0)">Backery</a></li> --}}
                                         </ul>
                                     </div>
                                 </div>
@@ -289,7 +287,7 @@
                                             data-bs-target="#info" type="button" role="tab">Overview</button>
                                     </li>
 
-                                    <li class="nav-item" role="presentation">
+                                    {{--<li class="nav-item" role="presentation">
                                         <button class="nav-link" id="care-tab" data-bs-toggle="tab"
                                             data-bs-target="#care" type="button" role="tab">Care Instructions</button>
                                     </li>
@@ -297,7 +295,7 @@
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="review-tab" data-bs-toggle="tab"
                                             data-bs-target="#review" type="button" role="tab">Review</button>
-                                    </li>
+                                    </li>--}}
                                 </ul>
 
                                 <div class="tab-content custom-tab" id="myTabContent">
@@ -753,13 +751,12 @@
                         <div class="vendor-box">
                             <div class="vendor-contain">
                                 <div class="vendor-image">
-                                    <img src="../assets/images/product/vendor.png" class="blur-up lazyload" alt="">
+                                    <img src="{{ asset('public/assets_web/images/logo.png') }}" class="blur-up lazyload" alt="">
                                 </div>
 
                                 <div class="vendor-name">
-                                    <h5 class="fw-500">Noodles Co.</h5>
-
-                                    <div class="product-rating mt-1">
+                                    <h5 class="fw-500">New Microsoet Computer</h5>
+									<div class="product-rating mt-1">
                                         <ul class="rating">
                                             <li>
                                                 <i data-feather="star" class="fill"></i>
@@ -782,11 +779,7 @@
 
                                 </div>
                             </div>
-
-                            <p class="vendor-detail">Noodles & Company is an American fast-casual
-                                restaurant that offers international and American noodle dishes and pasta.</p>
-
-                            <div class="vendor-list">
+							<div class="vendor-list">
                                 <ul>
                                     <li>
                                         <div class="address-contact">
@@ -798,7 +791,7 @@
                                     <li>
                                         <div class="address-contact">
                                             <i data-feather="headphones"></i>
-                                            <h5>Contact Seller: <span class="text-content">(+1)-123-456-789</span></h5>
+                                            <h5>Contact Seller: <span class="text-content">+91 099316 21852</span></h5>
                                         </div>
                                     </li>
                                 </ul>
@@ -914,7 +907,7 @@
         </div>
     </section>
     <!-- Product Left Sidebar End -->
-
+ 
     <!-- Related Product Section Start -->
     <section class="product-list-section section-b-space">
         <div class="container-fluid-lg">
@@ -929,93 +922,123 @@
             <div class="row">
                 <div class="col-12">
                     <div class="slider-6_1 product-wrapper">
-                        <div>
-                            <div class="product-box-3 wow fadeInUp">
-                                <div class="product-header">
-                                    <div class="product-image">
-                                        <a href="product-left-2.html">
-                                            <img src="../assets/images/cake/product/11.png"
-                                                class="img-fluid blur-up lazyload" alt="">
-                                        </a>
+                        @foreach($related_products as $dproduct)
+							
+								@php
+								 $product_url = route('product', $item->slug);
+								$item->cart_quantity = 0;
+                                $totalQty = 0; // Initialize total quantity
+                                if($item->stocks){
+                                    foreach ($item->stocks as $key => $stock) {
+                                        $totalQty += $stock->qty; // Accumulate total quantity
+                                    }
+                                }
 
-                                        <ul class="product-option">
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                    data-bs-target="#view">
-                                                    <i data-feather="eye"></i>
+                                if($item->discount_start_date <= $current_timestamp && $item->discount_end_date >= $current_timestamp &&  $item->discount_type == "percent"){
+                                    $output .= '<div class="beachs">'.$item->discount.' % Off</div>';
+                                    $discount_price = home_discounted_base_price($item, false);
+                                    $discount_show_price = home_discounted_base_price($item, true);
+                                    $original_show_price = home_base_price($item, true);
+                    
+                                }elseif($item->discount_start_date <= $current_timestamp && $item->discount_end_date >= $current_timestamp && $item->discount_type == "amount") {
+                                    $output .= '<div class="beachs">₹'.$item->discount.' Off</div>';
+                                    $discount_price = home_discounted_base_price($item, false);
+                                    $discount_show_price = home_discounted_base_price($item, true);
+                                    $original_show_price = home_base_price($item, true);
+                                }else{
+                                    $discount_price = home_base_price($item, false);
+                                    $discount_show_price = home_discounted_base_price($item, true);
+                                    $original_show_price = home_base_price($item, true);
+                                }
+								@endphp
+							<div>
+                                <div class="row m-0">
+                                    <div class="col-12 px-0">
+                                        <div class="product-box">
+                                            <div class="product-image">
+                                                <a href="{{ $product_url }}">
+                                                    <img src="{{ uploaded_asset($item->thumbnail_img) }}"
+                                                        class="img-fluid blur-up lazyload" alt="">
                                                 </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                                                <a href="compare.html">
-                                                    <i data-feather="refresh-cw"></i>
+                                                <ul class="product-option">
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="View">
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                            data-bs-target="#view">
+                                                            <i data-feather="eye"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Compare">
+                                                        <a href="compare.html">
+                                                            <i data-feather="refresh-cw"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Wishlist">
+                                                        <a href="wishlist.html" class="notifi-wishlist">
+                                                            <i data-feather="heart"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="product-detail">
+                                                <a href="{{ $product_url }}">
+                                                    <h6 class="name h-100">{{ \Illuminate\Support\Str::limit($item->getTranslation('name'), 45, '...') }}
+                                                    </h6>
                                                 </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                                                <a href="wishlist.html" class="notifi-wishlist">
-                                                    <i data-feather="heart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="product-footer">
-                                    <div class="product-detail">
-                                        <span class="span-name">Cake</span>
-                                        <a href="product-left-thumbnail.html">
-                                            <h5 class="name">Chocolate Chip Cookies 250 g</h5>
-                                        </a>
-                                        <div class="product-rating mt-2">
-                                            <ul class="rating">
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                            </ul>
-                                            <span>(5.0)</span>
-                                        </div>
-                                        <h6 class="unit">500 G</h6>
-                                        <h5 class="price"><span class="theme-color">$10.25</span> <del>$12.57</del>
-                                        </h5>
-                                        <div class="add-to-cart-box bg-white">
-                                            <button class="btn btn-add-cart addcart-button">Add
-                                                <span class="add-icon bg-light-gray">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </span>
-                                            </button>
-                                            <div class="cart_qty qty-box">
-                                                <div class="input-group bg-white">
-                                                    <button type="button" class="qty-left-minus bg-gray"
-                                                        data-type="minus" data-field="">
-                                                        <i class="fa fa-minus"></i>
+                                                <h5 class="sold text-content">
+                                                    <span class="theme-color price"> {{ $discount_show_price }}</span> 
+                                                    <del> 19% Off</del>
+                                                </h5>
+                                                <div class="product-rating mt-sm-2 mt-1">
+                                                    <ul class="rating">
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star"></i>
+                                                        </li>
+                                                    </ul>
+                                                    <h6 class="theme-color">In Stock</h6>
+                                                </div>
+                                                <div class="add-to-cart-box">
+                                                    <button class="btn btn-add-cart addcart-button">Add
+                                                        <span class="add-icon">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </span>
                                                     </button>
-                                                    <input class="form-control input-number qty-input" type="text"
-                                                        name="quantity" value="0">
-                                                    <button type="button" class="qty-right-plus bg-gray"
-                                                        data-type="plus" data-field="">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
+                                                    <div class="cart_qty qty-box">
+                                                        <div class="input-group">
+                                                            <button type="button" class="qty-left-minus"
+                                                                data-type="minus" data-field="">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                            <input class="form-control input-number qty-input"
+                                                                type="text" name="quantity" value="0">
+                                                            <button type="button" class="qty-right-plus"
+                                                                data-type="plus" data-field="">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+							
+						@endforeach
                         <div>
                             <div class="product-box-3 wow fadeInUp" data-wow-delay="0.05s">
                                 <div class="product-header">
