@@ -46516,3 +46516,28 @@ button[type="submit"] {
   background: linear-gradient(45deg, #fd6506, #fd6506);
   border-color: white;
 }
+
+/** css by rana **/
+
+.price_actual {
+    font-size: 25px;
+    font-weight: 600;
+    width: 100%;
+    color: #27AE60;
+    letter-spacing: 0.5px;
+    margin: 10px 0px 5px;
+}
+
+.pricebox .cutprice {
+    font-size: 18px;
+    text-decoration: line-through;
+    color: #888;
+    padding-left: 5px;
+    font-weight: normal;
+}
+
+.pricebox .offertxt {
+    color: green;
+    font-size: 12px;
+    font-weight: normal;
+}
