@@ -278,7 +278,7 @@
 									@endforeach
                                 </li>
 							@endforeach
-                                 
+
                                 <li class="onhover-category-list">
                                     <a href="javascript:void(0)" class="category-name">
                                         <!-- <img src="images/svg/1/grocery" alt=""> -->
@@ -363,7 +363,7 @@
                                                 <a class="dropdown-item" href="product-accordion.html">Product Accordion</a>
                                                 <a class="dropdown-item" href="product-circle.html">Product Tab</a>
                                                 <a class="dropdown-item" href="product-digital.html">Product Digital</a>
-                                    
+
                                                 <h5 class="custom-mt dropdown-header">Product Features
                                                 </h5>
                                                 <a class="dropdown-item" href="product-circle.html">Bundle (Cross Sale)</a>
@@ -543,7 +543,7 @@
                         </div>
                     </div>
                     <ul class="about-list right-nav-about">
-                        <li class="right-nav-list">
+                        {{-- <li class="right-nav-list">
                             <div class="dropdown theme-form-select">
                                 <button class="btn dropdown-toggle" type="button" id="select-language"
                                     data-bs-toggle="dropdown">
@@ -554,45 +554,18 @@
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)" id="english">
-                                            <img src="../assets/{{ asset('public/assets_web/images/country/united-kingdom.png') }}"
+                                            <img src="{{ asset('public/assets_web/images/country/united-kingdom.png') }}"
                                                 class="img-fluid blur-up lazyload" alt="">
                                             <span>English</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" id="france">
-                                            <img src="../assets/{{ asset('public/assets_web/images/country/germany.png') }}"
-                                                class="img-fluid blur-up lazyload" alt="">
-                                            <span></span>
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
                         <li class="right-nav-list">
                             <div class="dropdown theme-form-select">
-                                <button class="btn dropdown-toggle" type="button" id="select-language"
-                                    data-bs-toggle="dropdown">
-                                    <img src="../assets/{{ asset('public/assets_web/images/country/united-states.png') }}"
-                                        class="img-fluid blur-up lazyloaded" alt="">
-                                    <span>USD</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" id="english">
-                                            <img src="../assets/{{ asset('public/assets_web/images/country/united-kingdom.png') }}"
-                                                class="img-fluid blur-up lazyload" alt="">
-                                            <span>INR</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)" id="france">
-                                            <img src="../assets/{{ asset('public/assets_web/images/country/germany.png') }}"
-                                                class="img-fluid blur-up lazyload" alt="">
-                                            <span></span>
-                                        </a>
-                                    </li>
-                                </ul>
+
                             </div>
                         </li>
                     </ul>
@@ -674,4 +647,4 @@
     </ul>
 </div>
 <!-- mobile fix menu end -->
- 
+

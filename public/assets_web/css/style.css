@@ -46429,3 +46429,29 @@ header .top-nav .navbar-top .rightside-box .right-side-menu .right-side .header-
   height:50px;
   object-fit: contain;
 }
+
+
+/** css by rana **/
+
+.price_actual {
+    font-size: 25px;
+    font-weight: 600;
+    width: 100%;
+    color: #27AE60;
+    letter-spacing: 0.5px;
+    margin: 10px 0px 5px;
+}
+
+.pricebox .cutprice {
+    font-size: 18px;
+    text-decoration: line-through;
+    color: #888;
+    padding-left: 5px;
+    font-weight: normal;
+}
+
+.pricebox .offertxt {
+    color: green;
+    font-size: 12px;
+    font-weight: normal;
+}
