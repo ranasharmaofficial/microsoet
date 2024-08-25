@@ -745,14 +745,15 @@ class HomeController extends Controller
 
     public function login()
     {
-        if (Auth::check()) {
-            return redirect()->route('home');
-        }
-        if (session('temp_user_id') != null) {
-            session()->put('url.intended',URL::previous());
-        }
-        $categories = Category::where('level', 0)->orderBy('order_level', 'desc')->get();
-        return view('frontend.user_login', compact('categories'));
+        // if (Auth::check()) {
+        //     return redirect()->route('home');
+        // }
+        // if (session('temp_user_id') != null) {
+        //     session()->put('url.intended',URL::previous());
+        // }
+        // $categories = Category::where('level', 0)->orderBy('order_level', 'desc')->get();
+        // return view('frontend.user_login', compact('categories'));
+        return view('frontend.user_login');
     }
 
     public function registration(Request $request)

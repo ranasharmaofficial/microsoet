@@ -46429,3 +46429,90 @@ header .top-nav .navbar-top .rightside-box .right-side-menu .right-side .header-
   height:50px;
   object-fit: contain;
 }
+
+.form-toggle button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #eee;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-toggle button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.form {
+    display: none;
+}
+
+.form.active {
+    display: block;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #fd6506;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#login-form , #signup-form{
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.login-number-login{
+  border-radius:30px;
+}
+
+.login-btn{
+  border-radius: 30px !important;
+}
+
+.form-toggle button.active{
+  background-color: #fd6506;
+}
+
+.login-form .form-group .form-control {
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 12px 18px;
+  box-shadow: none;
+  transition: 0.5s;
+}
+
+.login-form .form-group .form-control {
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 12px 18px;
+  box-shadow: none;
+  transition: 0.5s;
+}
+
+
+
+.send_p {
+  top: 0px;
+  right: 0px;
+}
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(45deg, #fd6506, #fd6506);
+  border-color: white;
+}

@@ -205,14 +205,18 @@
                                         <ul class="user-box-name">
                                             <li class="product-box-contain">
                                                 <i></i>
-                                                <a href="login.html">Log In</a>
+                                                <a href={{url('/login')}}>User Login</a>
                                             </li>
                                             <li class="product-box-contain">
+                                                <i></i>
+                                                <a href={{url('/login')}}>Vendor Login</a>
+                                            </li>
+                                            {{-- <li class="product-box-contain">
                                                 <a href="sign-up.html">Register</a>
                                             </li>
                                             <li class="product-box-contain">
                                                 <a href="forgot.html">Forgot Password</a>
-                                            </li>
+                                            </li> --}}
                                         </ul>
                                     </div>
                                 </li>

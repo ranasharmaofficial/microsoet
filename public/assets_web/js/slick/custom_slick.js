@@ -27,7 +27,7 @@ $('.category-slider').slick({
     {
         breakpoint: 900,
         settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
         }
     },
     {
@@ -70,7 +70,7 @@ $('.category-slider-2').slick({
     {
         breakpoint: 910,
         settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
             dots: true,
             autoplay: true,
             autoplaySpeed: 2500,
@@ -1267,19 +1267,19 @@ $('.product-box-slider-2').slick({
     responsive: [{
         breakpoint: 1630,
         settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
         }
     },
     {
         breakpoint: 1400,
         settings: {
-            slidesToShow: 5,
+            slidesToShow: 3,
         }
     },
     {
         breakpoint: 1200,
         settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
         }
     },
     {
@@ -1306,7 +1306,7 @@ $('.product-box-slider').slick({
     responsive: [{
         breakpoint: 1680,
         settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
         }
     },
     {
@@ -1318,7 +1318,7 @@ $('.product-box-slider').slick({
     {
         breakpoint: 1200,
         settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
         }
     }, {
         breakpoint: 992,
