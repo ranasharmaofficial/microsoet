@@ -76,9 +76,14 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/animate.min.css')}}" media="all">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/bulk-style.css')}}" media="all">
     <link id="rtl-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/vendors/animate.css')}}">
+    <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/slick.css')}}" media="all">
+    <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/slick-theme.css')}}" media="all">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/style.css')}}" media="all">
     <!-- <link rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/vendors/ion.rangeSlider.min.css')}}">
     <!-- Template css -->
+
+
+
     
     
     <!-- <link id="color-link" rel="stylesheet" type="text/css" href="<?=$base_url?>css/font-style.css" media="all"> -->
@@ -1104,7 +1109,7 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <script src="{{static_asset('assets_web/js/custom-wow.js')}}"></script>
     <script src="{{static_asset('assets_web/js/script.js')}}"></script>
     <script src="{{static_asset('assets_web/js/theme-setting.js')}}"></script>
-	 
+    <script src="{{static_asset('assets_web/js/slick/slick.js')}}"></script>
 
             <!-- Load static modal  -->
             <script>
