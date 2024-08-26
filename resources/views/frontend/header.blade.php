@@ -587,7 +587,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-xxl-6 col-lg-9 d-lg-block d-none">
+            {{-- <div class="col-xxl-6 col-lg-9 d-lg-block d-none">
                 <div class="header-offer">
                     <div class="notification-slider">
                         <div>
@@ -608,7 +608,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-3">
             </div>
         </div>

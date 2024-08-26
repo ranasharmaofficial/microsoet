@@ -8,7 +8,77 @@
 
 
 @section('content')
-    <!-- Home Section Start -->
+
+
+<div class="category-slider-2 product-wrapper no-arrow">
+    @foreach (\App\Models\Category::get() as $category)
+    <div>
+        <a href="{{ route('products.category', $category->slug) }}" class="category-box category-dark bg-transparent mt-0">
+            <div>
+                <img src="{{ uploaded_asset($category->icon) }}" class="blur-up lazyload" alt="{{ $category->name }}">
+                <h5>{{ $category->name }}</h5>
+            </div>
+        </a>
+    </div>
+    @endforeach
+
+
+    {{-- <div>
+        <a href="shop-left-sidebar.html" class="category-box category-dark">
+            <div>
+                <img src="../assets/svg/1/cup.svg" class="blur-up lazyload" alt="">
+                <h5>Beverages</h5>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a href="shop-left-sidebar.html" class="category-box category-dark">
+            <div>
+                <img src="../assets/svg/1/meats.svg" class="blur-up lazyload" alt="">
+                <h5>Meats & Seafood</h5>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a href="shop-left-sidebar.html" class="category-box category-dark">
+            <div>
+                <img src="../assets/svg/1/breakfast.svg" class="blur-up lazyload" alt="">
+                <h5>Breakfast</h5>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a href="shop-left-sidebar.html" class="category-box category-dark">
+            <div>
+                <img src="../assets/svg/1/frozen.svg" class="blur-up lazyload" alt="">
+                <h5>Frozen Foods</h5>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a href="shop-left-sidebar.html" class="category-box category-dark">
+            <div>
+                <img src="../assets/svg/1/milk.svg" class="blur-up lazyload" alt="">
+                <h5>Milk & Dairies</h5>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a href="shop-left-sidebar.html" class="category-box category-dark">
+            <div>
+                <img src="../assets/svg/1/pet.svg" class="blur-up lazyload" alt="">
+                <h5>Pet Food</h5>
+            </div>
+        </a>
+    </div> --}}
+</div>
+
+<!-- Home Section Start -->
     <section class="home-section pt-2">
         <div class="container-fluid-lg p-0 m-0">
             <div class="row g-4 m-0 p-0">
@@ -1013,9 +1083,6 @@
         <!-- Yojnas will be appended here under respective categories -->
     </div>
 </div>
-
-<hr class="bg-gray-300 h-1 rounded-xl">
-
 
 
 @endsection
