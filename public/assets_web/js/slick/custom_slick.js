@@ -47,24 +47,24 @@ $('.category-slider').slick({
 $('.category-slider-2').slick({
     arrows: true,
     infinite: true,
-    slidesToShow: 7,
+    slidesToShow: 10,
     slidesToScroll: 1,
     responsive: [{
         breakpoint: 1745,
         settings: {
-            slidesToShow: 6,
-            dots: true,
-            autoplay: true,
-            autoplaySpeed: 2500,
+            slidesToShow: 10,
+            dots: false,
+            autoplay: false,
+            autoplaySpeed: 11500,
         }
     },
     {
         breakpoint: 1540,
         settings: {
-            slidesToShow: 5,
-            dots: true,
+            slidesToShow: 10,
+            dots: false,
             autoplay: true,
-            autoplaySpeed: 2500,
+            autoplaySpeed: 4500,
         }
     },
     {
