@@ -147,6 +147,7 @@ Route::get('/social-login/{provider}/callback', 'Auth\LoginController@handleProv
 
 Route::get('/admin/login', 'HomeController@admin_login')->name('admin.login');
 Route::get('/login', 'HomeController@login')->name('login');
+Route::get('/vendor-login', 'HomeController@vendorLogin')->name('vendor-login');
 Route::get('register', function () {
     return redirect('login');
 });
@@ -628,10 +629,13 @@ Route::post('service/cart_modal', [ServiceCartController::class, 'serviceCartMod
 Route::post('service-add-to-cart', [ServiceCartController::class, 'addToServiceUserCart']);
 
 
-// User Login & Registration
+// User / Vendor  Login & Registration
 
 Route::post('/send-mobile-otp', [AuthRegisterController::class, 'sendOtp'])->name('send.phone.otp');
 Route::post('/verify-otp', [AuthRegisterController::class, 'verifyOtp'])->name('verify.phone.otp');
 
 Route::post('/send-login-otp', [AuthLoginController::class, 'sendLoginOtp'])->name('send.login.otp');
 Route::post('/verify-login-otp', [AuthLoginController::class, 'verifyLoginOtp'])->name('verify.login.otp');
+
+Route::post('/send-vendor-mobile-otp', [AuthRegisterController::class, 'sendVendorOtp'])->name('send.vendor.phone.otp');
+Route::post('/verify-vendor-otp', [AuthRegisterController::class, 'verifyVendorOtp'])->name('verify.vendor.phone.otp');

@@ -454,7 +454,7 @@ class LoginController extends Controller
 
     public function sendLoginOtp(Request $request)
     {
-        dd("done");
+        // dd("done");
         $phone = $request->input('phone');
         $verification_code = rand(1000, 9999);
 

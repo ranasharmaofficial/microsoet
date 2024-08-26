@@ -455,7 +455,7 @@
 
             $.ajax({
                 method: 'POST',
-                url: '{{ route('verify.phone.otp') }}',
+                url: "{{ route('verify.phone.otp') }}",
                 data: {
                     name: name,
                     phone: phone,
