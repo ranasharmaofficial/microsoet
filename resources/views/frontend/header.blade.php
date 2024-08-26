@@ -11,7 +11,7 @@
                                 <i class="fa-solid fa-bars text-white"></i>
                             </span>
                         </button>
-                        <a href="/index" class="web-logo nav-logo">
+                        <a href="{{ url('') }}" class="web-logo nav-logo">
                             <img src="{{ asset('public/assets_web/images/logo 78.png') }}"
                                 class="img-fluid blur-up lazyload" alt="">
                         </a>
@@ -251,7 +251,7 @@
                                 </button>
                             </div>
                             <ul class="category-list" id="callingAllCategory">
-							 @foreach (\App\Models\Category::where('parent_id', 0)->where('featured', 1)->get() as $key => $category)
+							 @foreach (\App\Models\Category::where('parent_id', 0)->get() as $key => $category)
                                 <li class="onhover-category-list">
                                     <a href="" class="category-name">
                                         <img src="{{ uploaded_asset($category->icon) }}"
@@ -259,11 +259,12 @@
                                         <h6>{{ $category->name }}</h6>
                                         <i class="fa-solid fa-angle-right"></i>
                                     </a>
-									 @foreach (\App\Models\Category::where('parent_id', $category->id)->get() as $subcat)
+
+                                    <div class="onhover-category-box">
+                                        @foreach (\App\Models\Category::where('parent_id', $category->id)->get() as $subcat)
 										@php
 										  $chcatex = \App\Models\Category::where('parent_id', $subcat->id)->exists();
 										@endphp
-                                    <div class="onhover-category-box">
                                         <div class="list-1">
                                             <div class="category-title-box">
                                                 <h5>{{$subcat->name}}</h5>
@@ -278,8 +279,9 @@
                                             </ul>
 											 @endif
                                         </div>
+                                        @endforeach
+
                                     </div>
-									@endforeach
                                 </li>
 							@endforeach
 
@@ -618,33 +620,33 @@
 <!-- mobile fix menu start -->
 <div class="mobile-menu d-md-none d-block mobile-cart">
     <ul>
-        <li class="active">
+        <li class="">
             <a href="{{ url('') }}">
-                <i class="iconly-Home icli"></i>
+                <i class="bi bi-house-door text-white" style="font-size: 20px;"></i>
                 <span>Home</span>
             </a>
         </li>
         <li class="mobile-category">
             <a href="javascript:void(0)">
-                <i class="iconly-Category icli js-link"></i>
+                <i class="bi bi-list text-white" style="font-size: 20px;"></i>
                 <span>Category</span>
             </a>
         </li>
         <li>
-            <a href="search.php" class="search-box">
-                <i class="iconly-Search icli"></i>
+            <a href="javascript:void(0)" class="search-box">
+                <i class="bi bi-search text-white" style="font-size: 20px;"></i>
                 <span>Search</span>
             </a>
         </li>
         <li>
-            <a href="wishlist.php" class="notifi-wishlist">
-                <i class="iconly-Heart icli"></i>
+            <a href="javascript:void(0)" class="notifi-wishlist">
+                <i class="bi bi-heart text-white" style="font-size: 20px;"></i>
                 <span>My Wish</span>
             </a>
         </li>
         <li>
-            <a href="cart.php">
-                <i class="iconly-Bag-2 icli fly-cate"></i>
+            <a href="javascript:void(0)">
+                <i class="bi bi-cart text-white" style="font-size: 20px;"></i>
                 <span>Cart</span>
             </a>
         </li>

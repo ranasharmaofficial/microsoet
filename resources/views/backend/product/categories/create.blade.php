@@ -32,7 +32,7 @@
                                 {{-- <option selected disabled>Select Category Type</option> --}}
                                 <option value="1" selected>Product</option>
                                 {{-- <option value="2">Service</option> --}}
-                                     
+
                             </select>
                         </div>
                     </div>
@@ -40,13 +40,13 @@
                         <label class="col-md-3 col-form-label">{{translate('Parent Category')}}</label>
                         <div class="col-md-9">
                             <select class="select2 form-control " name="parent_id" id="cats_id" data-toggle="select2" data-placeholder="Choose ..." data-live-search="true">
-                                 
+
                             </select>
                         </div>
 
-                        
+
                     </div> --}}
-                    <div id="hidden_div" class="form-group row">
+                    <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Parent Category')}}</label>
                         <div class="col-md-9">
                             <select class="select2 form-control aiz-selectpicker" name="parent_id" data-toggle="select2" data-placeholder="Choose ..." data-live-search="true">
@@ -74,7 +74,7 @@
                             </select>
                         </div>
                     </div>
-					
+
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">
                             {{translate('Ordering Number')}}
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="form-control file-amount">{{ translate('Choose File') }}</div>
                                 <input type="hidden" name="home_image" class="selected-files">
-								
+
                             </div>
                             <div class="file-preview box sm">
                             </div>
@@ -195,7 +195,7 @@
                     </div>
 
                     <div class="form-group row form_div_status d-none">
-                        <label class="col-md-3 col-form-label">{{ translate('Form Fields') }}</label> 
+                        <label class="col-md-3 col-form-label">{{ translate('Form Fields') }}</label>
                         <div class="col-md-9 home-banner2-target">
 
                         </div>
@@ -261,7 +261,7 @@
         } else{
             document.getElementById('service_div').style.display = "none";
         }
-    } 
+    }
 
     // Added by AviSingh
     function update_form_status(el){
@@ -293,7 +293,7 @@
                         $.each(result, function (i) {
                             datas += '<option value="'+result[i].id+'">'+result[i].name+'</option>';
                              //console.log(datas);
-                        });                    
+                        });
                     }
                     jQuery('#cats_id').html(datas);
                 }
