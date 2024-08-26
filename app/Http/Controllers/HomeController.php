@@ -756,6 +756,19 @@ class HomeController extends Controller
         return view('frontend.user_login');
     }
 
+    public function vendorLogin()
+    {
+        // if (Auth::check()) {
+        //     return redirect()->route('home');
+        // }
+        // if (session('temp_user_id') != null) {
+        //     session()->put('url.intended',URL::previous());
+        // }
+        // $categories = Category::where('level', 0)->orderBy('order_level', 'desc')->get();
+        // return view('frontend.user_login', compact('categories'));
+        return view('frontend.vendor_login');
+    }
+
     public function registration(Request $request)
     {
         if (Auth::check()) {

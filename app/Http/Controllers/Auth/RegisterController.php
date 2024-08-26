@@ -445,4 +445,90 @@ class RegisterController extends Controller
         }
 
     }
+
+    public function sendVendorOtp(Request $request)
+    {
+        $phone = $request->input('phone');
+        $verification_code = rand(1000, 9999);
+
+        // dd($phone);
+
+        $username = 'GROWCITI';
+        $number = $phone;
+        $message = "*Growciti:* Use OTP $verification_code to activate your account. DO NOT SHARE this code with anyone, Team Growciti";
+        $token = 'R0pwa1dvdzdxbUM0R2kxajM2L3kwQT09';
+
+        $response = Http::get("https://int.chatway.in/api/send-msg?username=$username&number=91$number&message=$message&token=$token");
+
+
+        if ($response->successful()) {
+            session(['otp' => $verification_code, 'otp_mobile' => $phone]);
+            session()->flash('message', 'OTP sent successfully.');
+            session()->flash('alert-class', 'alert-success');
+
+            return response()->json(['success' => true, 'message' => 'OTP sent successfully.']);
+        } else {
+            // return redirect("profile")->with('alert-danger', 'Failed to send OTP.');
+            return response()->json(['success' => false, 'message' => 'Failed to send OTP.']);
+        }
+    }
+
+    public function verifyVendorOtp(Request $request)
+    {
+        $phone = $request->input('phone');
+        $otp = $request->input('otp');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $shop_name = $request->input('shop_name');
+        $shop_address = $request->input('shop_address');
+        $gst = $request->input('gst');
+
+        // Retrieve OTP from session or database
+        $storedOtp = session('otp');
+        $storedMobile = session('otp_mobile');
+
+        if ($otp == $storedOtp && $phone == $storedMobile) {
+
+            $cnt_user = User::where('phone', $phone)->count();
+            if($cnt_user == 0){
+                $user = new User;
+                $user->name = $name;
+                $user->phone = $phone;
+                $user->gst = $gst;
+                $user->email = $email;
+                $user->shop_name = $shop_name;
+                $user->shop_address = $shop_address;
+                $user->is_verified = 1;
+                $user->user_type = 'vendor';
+                $user->email_verified_at = now();
+                $user->save();
+
+                if($user){
+                    session()->forget(['otp', 'otp_mobile']);
+                    Auth::login($user);
+                    return response()->json(['success' => true, 'message' => 'Successfully Registered.']);
+                }
+                else {
+                   return response()->json(['success' => false, 'message' => 'Invalid OTP']);
+                }
+
+            }else{
+                $check_user_verified = User::where('phone', $phone)->where('is_verified',0)->count();
+                if($check_user_verified){
+                    $user = User::where('phone', $phone)->first();
+                    $user->is_verified = 1;
+                    $user->email_verified_at = now();
+                    $user->save();
+                }else{
+                    $user = User::where('phone', $phone)->first();
+                }
+                session()->forget(['otp', 'otp_mobile']);
+                    Auth::login($user);
+                    return response()->json(['success' => true, 'message' => 'OTP VERIFIED']);
+            }
+        }else{
+            return response()->json(['success' => false, 'message' => 'Invalid OTP']);
+        }
+
+    }
 }

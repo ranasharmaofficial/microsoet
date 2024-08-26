@@ -209,7 +209,7 @@
                                             </li>
                                             <li class="product-box-contain">
                                                 <i></i>
-                                                <a href={{url('/login')}}>Vendor Login</a>
+                                                <a href={{url('/vendor-login')}}>Vendor Login</a>
                                             </li>
                                             {{-- <li class="product-box-contain">
                                                 <a href="sign-up.html">Register</a>
