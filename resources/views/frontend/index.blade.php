@@ -23,59 +23,7 @@
     @endforeach
 
 
-    {{-- <div>
-        <a href="shop-left-sidebar.html" class="category-box category-dark">
-            <div>
-                <img src="../assets/svg/1/cup.svg" class="blur-up lazyload" alt="">
-                <h5>Beverages</h5>
-            </div>
-        </a>
-    </div>
-
-    <div>
-        <a href="shop-left-sidebar.html" class="category-box category-dark">
-            <div>
-                <img src="../assets/svg/1/meats.svg" class="blur-up lazyload" alt="">
-                <h5>Meats & Seafood</h5>
-            </div>
-        </a>
-    </div>
-
-    <div>
-        <a href="shop-left-sidebar.html" class="category-box category-dark">
-            <div>
-                <img src="../assets/svg/1/breakfast.svg" class="blur-up lazyload" alt="">
-                <h5>Breakfast</h5>
-            </div>
-        </a>
-    </div>
-
-    <div>
-        <a href="shop-left-sidebar.html" class="category-box category-dark">
-            <div>
-                <img src="../assets/svg/1/frozen.svg" class="blur-up lazyload" alt="">
-                <h5>Frozen Foods</h5>
-            </div>
-        </a>
-    </div>
-
-    <div>
-        <a href="shop-left-sidebar.html" class="category-box category-dark">
-            <div>
-                <img src="../assets/svg/1/milk.svg" class="blur-up lazyload" alt="">
-                <h5>Milk & Dairies</h5>
-            </div>
-        </a>
-    </div>
-
-    <div>
-        <a href="shop-left-sidebar.html" class="category-box category-dark">
-            <div>
-                <img src="../assets/svg/1/pet.svg" class="blur-up lazyload" alt="">
-                <h5>Pet Food</h5>
-            </div>
-        </a>
-    </div> --}}
+    
 </div>
 
 <!-- Home Section Start -->
@@ -96,84 +44,7 @@
                             </div>
                         @endforeach
 
-                        {{-- <div class="col-xl-6 col-md-6 p-0 m-0">
-                            <div class="home-contain text-center banner-left-cart">
-                                <a href="#">
-                                    <img src="{{ asset('public/assets_web/images/television (1).png') }}" alt="">
-                                    <p>T.V</p>
-                                </a>
-                            </div>
-                        </div>
-                       <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                           <a href="#">
-                           <img src="{{ asset('public/assets_web/images/laptop-screen (1).png')}}" alt="">
-                           <p>Laptop</p>
-                           </a>
-                       </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                           <a href="#">
-                           <img src="{{ asset('public/assets_web/images/cctv-camera (1).png')}}" alt="">
-                           <p>CCTV</p>
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                          <a href="#"> <img src="{{ asset('public/assets_web/images/pc (1).png')}}" alt="">
-                          <p>Mouse</p></a>
-                        </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                           <a href="#">
-                           <img src="{{ asset('public/assets_web/images/printer (2).png')}}" alt="">
-                           <p>Printer</p>
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                          <a href="#">
-                          <img src="{{ asset('public/assets_web/images/pendrive-outlined.png')}}" alt="">
-                          <p>Pendrive</p>
-                          </a>
-                        </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                          <a href="#">
-                          <img src="{{ asset('public/assets_web/images/ytd.png')}}" alt="">
-                          <p>Keyboard</p>
-                          </a>
-                        </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                           <a href="#">
-                           <img src="{{ asset('public/assets_web/images/hard-disk.png')}}" alt="">
-                           <p>Hard-disk</p>
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                          <a href="#">
-                          <img src="{{ asset('public/assets_web/images/computer.png')}}" alt="">
-                          <p>Destop</p>
-                          </a>
-                        </div>
-                     </div>
-                     <div class="col-xl-6 col-md-6 p-0 m-0">
-                        <div class="home-contain text-center banner-left-cart">
-                          <a href="#">
-                          <img src="{{ asset('public/assets_web/images/fan.png')}}" alt="">
-                          <p>Fan</p>
-                          </a>
-                        </div>
-                     </div> --}}
+                        
 
                     </div>
                 </div>
@@ -203,38 +74,23 @@
                     </div>
                 </div>
 				@endif
+				 @if (get_setting('home_banner1_images') != null)
                 <div class="col-xl-4 ratio_65">
                     <div class="row g-4">
+						 @php $banner_1_imags = json_decode(get_setting('home_banner1_images')); @endphp
+						@foreach ($banner_1_imags as $key => $value)
+							<div class="col-xl-6 col-md-6">
+								<div class="home-contain text-center">
+									<a href="{{ json_decode(get_setting('home_banner1_links'), true)[$key] }}">
+									<img src="{{ uploaded_asset($banner_1_imags[$key]) }}" alt="{{ env('APP_NAME') }} promo" class="right-side-banner"> </a>
+								</div>
+							</div>
+						@endforeach
 
-                        <div class="col-xl-6 col-md-6">
-                            <div class="home-contain text-center">
-                                <a href="#"><img src="{{ asset('public/assets_web/images/right-t.png') }}"
-                                        alt="" class="right-side-banner"> </a>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 col-md-6">
-                            <div class="home-contain text-center">
-                                <a href="#">
-                                    <img src="{{ asset('public/assets_web/images/right-twod.png') }}" alt=""
-                                        class="right-side-banner">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-md-6">
-                            <div class="home-contain text-center">
-                                <a href="#"><img src="{{ asset('public/assets_web/images/ty0.png') }}" alt=""
-                                        class="right-side-banner"></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-md-6">
-                            <div class="home-contain text-center">
-                                <img src="{{ asset('public/assets_web/images/y987.png') }}" alt=""
-                                    class="right-side-banner">
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
+				@endif
             </div>
         </div>
         </div>

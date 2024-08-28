@@ -1,6 +1,6 @@
 <!-- Header Start -->
-<header class="pb-md-4 pb-0">
-    <div class="top-nav top-header sticky-header">
+<header class="pb-md-4 pb-0 ">
+    <div class="top-nav top-header sticky-header fixed-top">
         <div class="container-fluid-lg">
             <div class="row">
                 <div class="col-12">
@@ -26,7 +26,7 @@
                             </div>
                             <div class="search-box">
                                 <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="I'm searching for...">
+                                    <input type="search" style="border: transparent;" class="form-control" placeholder="I'm searching for...">
                                     <button class="btn" type="button" id="button-addon2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
