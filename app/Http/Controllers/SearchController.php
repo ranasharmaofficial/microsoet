@@ -365,7 +365,7 @@ class SearchController extends Controller
         }
        
         if($product_lists != null){
-			foreach($product_lists as $row){
+			/*foreach($product_lists as $row){
 			    $img  = uploaded_asset($row->thumbnail_img);
                 $qty = 0;  if($row->stocks){ foreach ($row->stocks as $key => $stock) { $qty += $stock->qty; }} 
                 $output .= '<div class="grid-item col-md-3 col-cat-box">
@@ -437,6 +437,79 @@ class SearchController extends Controller
 							$output .= '</div>         
                     </div>
                 </div>';
+			}
+			*/
+			
+			foreach($product_lists as $row){
+				$img  = uploaded_asset($row->thumbnail_img);
+                $qty = 0;  if($row->stocks){ foreach ($row->stocks as $key => $stock) { $qty += $stock->qty; }} 
+				if($row->discount_start_date <= $current_timestamp && $row->discount_end_date >= $current_timestamp &&  $row->discount_type == "percent"){
+                            $output .= '<div class="beachs">'.$row->discount.' % Off</div>'; 
+                            $discount_price = home_discounted_base_price($row, false);
+                            $discount_show_price = home_discounted_base_price($row, true);
+                            $original_show_price = home_base_price($row, true);
+
+                        }elseif($row->discount_start_date <= $current_timestamp && $row->discount_end_date >= $current_timestamp && $row->discount_type == "amount") {
+                            $output .= '<div class="beachs">₹'.$row->discount.' Off</div>';
+                            $discount_price = home_discounted_base_price($row, false);
+                            $discount_show_price = home_discounted_base_price($row, true);
+                            $original_show_price = home_base_price($row, true);
+                        }else{
+                            $discount_price = home_base_price($row, false);  
+                            $discount_show_price = home_base_price($row, true);; 
+                            $original_show_price = '';
+                        }
+						$brand_details = Brand::where('id', $row->brand_id)->first();
+				$output .= '
+				<div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="'. route('product', $row->slug) .'">
+                                            <img src="'.$img.'"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+
+                                        
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">';
+										if($brand_details){
+											$output .=' <span class="span-name">'.$brand_details->name.'</span>';
+										}
+                                        
+                                       $output .=' <a href="'. route('product', $row->slug) .'">
+                                            <h5 class="name">'. \Illuminate\Support\Str::limit($row->name, 36, '...') .'</h5>
+                                        </a>
+                                        
+                                        <h5 class="price"><span class="theme-color">'.$discount_show_price.'</h5>
+                                        <div class="add-to-cart-box bg-white d-none">
+                                            <button class="btn btn-add-cart addcart-button">Add
+                                                <span class="add-icon bg-light-gray">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </span>
+                                            </button>
+                                            <div class="cart_qty qty-box">
+                                                <div class="input-group bg-white">
+                                                    <button type="button" class="qty-left-minus bg-gray"
+                                                        data-type="minus" data-field="">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                    <input class="form-control input-number qty-input" type="text"
+                                                        name="quantity" value="0">
+                                                    <button type="button" class="qty-right-plus bg-gray"
+                                                        data-type="plus" data-field="">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+				';
 			}
 
             $output .= '<div>' .$product_lists->render(). '</div>';

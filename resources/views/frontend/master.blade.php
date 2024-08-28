@@ -48,9 +48,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        
 
-        <?php 
+
+        <?php
 	    $base_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
 $base_url .= "://".$_SERVER['HTTP_HOST'];
 $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
@@ -79,16 +79,8 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/slick.css')}}" media="all">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/slick-theme.css')}}" media="all">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/style.css')}}" media="all">
-    <!-- <link rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/vendors/ion.rangeSlider.min.css')}}">
-    <!-- Template css -->
+    <link rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/vendors/ion.rangeSlider.min.css')}}">
 
-
-
-    
-    
-    <!-- <link id="color-link" rel="stylesheet" type="text/css" href="<?=$base_url?>css/font-style.css" media="all"> -->
-	
-	
 
         @yield('style')
 
@@ -105,16 +97,6 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
             });
 
         </script>
-
-            <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1YBN7TTVN"></script>
-            <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-T1YBN7TTVN');
-            </script>
 
 
 
@@ -148,47 +130,12 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
 	    @include('frontend.header')
         @yield('content')
         @include('frontend.footer')
-        @include('frontend.partials.modal')
-        <!-- @include('frontend.partials.static_modal') -->
 
-
-        <div class="modal fade popup_products_modals" id="addToCart">
-            <div class="modal-dialog mt-0 d-block modal-lg modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document">
-                <div class="modal-content position-relative">
-                    <!--<div class="c-preloader text-center p-3">
-                        <i class="las la-spinner la-spin la-3x"></i>
-                    </div>-->
-                    <button type="button" class="close absolute-top-right btn-icon close z-1" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="la-2x">&times;</span>
-                    </button>
-                    <div id="addToCart-modal-body">
-                <span id="userid"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         @yield('modal')
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type="text/javascript">// function removeFromCartView(e, key){
-            // function removeFromCartView(e, key){
-                // e.preventDefault();
-                // removeFromCart(key);
-            // }
-
-            // function removeFromCart(key){
-                // $.post('{{ route('cart.removeFromCart') }}', {
-                    // &_token  : '&_token={{csrf_token()}}',
-                    // id      :  key
-                // }, function(data){
-                    // updateNavCart(data.nav_cart_view,data.cart_count);
-                    // $('#cart-summary').html(data.cart_view);
-                    // AIZ.plugins.notify('success', "{{ translate('Item has been removed from cart') }}");
-                    // $('#cart_items_sidenav').html(parseInt($('#cart_items_sidenav').html())-1);
-                // });
-            // }
-
+        <script type="text/javascript">
             //get state city names from pin code
             function get_state_city(){
                 var pincode = jQuery('#pincode').val();
@@ -1084,7 +1031,7 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
 
         </script>
 
-          
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
             <script src="{{static_asset('assets_web/js/sweetalert2.all.min.js')}}" type="text/javascript"></script>

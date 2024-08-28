@@ -103,7 +103,7 @@
 		{{-- Home Banner 1 --}}
 		<div class="card">
 			<div class="card-header">
-				<h6 class="mb-0">{{ translate('Home Banner 1 (Max 2)') }}</h6>
+				<h6 class="mb-0">{{ translate('Home Banner (Max 4)') }}</h6>
 			</div>
 			<div class="card-body">
 				<form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
@@ -285,7 +285,7 @@
 		</div>
 
 		{{-- Home categories 1--}}
-		<div class="card">
+		<div class="card d-none">
 			<div class="card-header">
 				<h6 class="mb-0">{{ translate('Home Premium Categories') }} (Add Maximum 4)</h6>
 			</div>
@@ -297,17 +297,17 @@
 						<div class="home-categories-target">
 							<input type="hidden" name="types[]" value="home_categories">
 
-							
+
 							@if (get_setting('home_categories') != null)
 								@foreach (json_decode(get_setting('home_categories'), true) as $key => $value)
 									<div class="row gutters-5">
 										<div class="col">
 											<div class="form-group">
 												<select class="form-control aiz-selectpicker" name="home_categories[]" data-live-search="true" data-selected={{ $value }} required>
-													
+
 													@foreach (\App\Models\Category::where('parent_id', 0)->get() as $category)
 														<option value="{{ $category->id }}">{{ $category->getTranslation('name') }}</option>
-														
+
 													@endforeach
 					                            </select>
 											</div>
@@ -353,7 +353,7 @@
 		</div>
 
 		{{-- Home categories 2--}}
-		<div class="card">
+		<div class="card d-none">
 			<div class="card-header">
 				<h6 class="mb-0">{{ translate('Home Categories With Banner') }}</h6>
 			</div>
@@ -367,7 +367,7 @@
 							<input type="hidden" name="types[]" value="home_categories2_images">
 							<input type="hidden" name="types[]" value="home_categories2_links">
 
-							
+
 							@if (get_setting('home_categories2') != null)
 								@foreach (json_decode(get_setting('home_categories2'), true) as $key => $value)
 									<div class="row gutters-5">

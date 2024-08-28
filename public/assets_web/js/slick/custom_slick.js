@@ -1279,7 +1279,7 @@ $('.product-box-slider-2').slick({
     {
         breakpoint: 1200,
         settings: {
-            slidesToShow: 4,
+            slidesToShow: 5,
         }
     },
     {
@@ -1306,7 +1306,7 @@ $('.product-box-slider').slick({
     responsive: [{
         breakpoint: 1680,
         settings: {
-            slidesToShow: 4,
+            slidesToShow: 5,
         }
     },
     {
@@ -1318,7 +1318,7 @@ $('.product-box-slider').slick({
     {
         breakpoint: 1200,
         settings: {
-            slidesToShow: 4,
+            slidesToShow: 5,
         }
     }, {
         breakpoint: 992,

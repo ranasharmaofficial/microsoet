@@ -1,9 +1,9 @@
-			<div id="cat_product">			 
-				@php 
+			<div id="cat_product">
+				@php
 					$current_timestamp = strtotime(date('Y-m-d H:i:s'));
 				@endphp
-				
-				@if(get_setting('home_categories') != null) 
+
+				@if(get_setting('home_categories') != null)
 				@php $home_categories = json_decode(get_setting('top10_categories')); @endphp
 				@foreach($home_categories as $key => $value)
 				@php $category = \App\Models\Category::find($value); @endphp
@@ -15,7 +15,7 @@
                                 <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
                             </svg>
                         </span>
-                        <p>A virtual assistant collects the products from your list rana sharma</p>
+                        {{-- <p>A virtual assistant collects the products from your list rana sharma</p> --}}
                     </div>
 					@php
 						$product_lists = App\Models\Product::where('category_id', $category->id)->where('published',1)->where('approved',1)->limit(10)->get();
@@ -24,7 +24,7 @@
                         <div class="product-box-slider no-arrow">
                             @if(count($product_lists)>0)
 								@foreach($product_lists as $item)
-							
+
 								@php
 								 $product_url = route('product', $item->slug);
 								$item->cart_quantity = 0;
@@ -40,7 +40,7 @@
                                     $discount_price = home_discounted_base_price($item, false);
                                     $discount_show_price = home_discounted_base_price($item, true);
                                     $original_show_price = home_base_price($item, true);
-                    
+
                                 }elseif($item->discount_start_date <= $current_timestamp && $item->discount_end_date >= $current_timestamp && $item->discount_type == "amount") {
                                     $output .= '<div class="beachs">₹'.$item->discount.' Off</div>';
                                     $discount_price = home_discounted_base_price($item, false);
@@ -89,7 +89,7 @@
                                                     </h6>
                                                 </a>
                                                 <h5 class="sold text-content">
-                                                    <span class="theme-color price"> {{ $discount_show_price }}</span> 
+                                                    <span class="theme-color price"> {{ $discount_show_price }}</span>
                                                     <del> 19% Off</del>
                                                 </h5>
                                                 <div class="product-rating mt-sm-2 mt-1">
@@ -112,7 +112,7 @@
                                                     </ul>
                                                     <h6 class="theme-color">In Stock</h6>
                                                 </div>
-                                                <div class="add-to-cart-box">
+                                                <div class="add-to-cart-box d-none">
                                                     <button class="btn btn-add-cart addcart-button">Add
                                                         <span class="add-icon">
                                                             <i class="fa-solid fa-plus"></i>
@@ -140,24 +140,24 @@
                             </div>
 							@endforeach
 							@endif
-                             
+
                         </div>
                     </div>
                     @endforeach
 					<!-- Rana Products  --->
-				@endif	
+				@endif
 			</div>
-				
-				 
+
+
 				<script>
-				
+
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
- 
+
 
         // AJAX call to fetch home-category-product
         $.ajax({
@@ -166,7 +166,7 @@
             success: function (response) {
                 if (response.status == true) {
                     $('#cat_products').html(response.data);
-                    
+
                 } else {
                     console.log('Error: Response status is not true');
                 }
@@ -175,7 +175,7 @@
                 console.log('AJAX Error:', error);
             }
         });
-		
+
 
         //Add to cart button function
         $(document).on('click', '.addToCartUButton', function () {
