@@ -227,7 +227,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid-lg header-bottom-s d-none d-md-block">
+    <div class="container-fluid-lg header-bottom-s  d-md-block">
         <div class="row">
             <div class="col-12">
                 <div class="header-nav">
