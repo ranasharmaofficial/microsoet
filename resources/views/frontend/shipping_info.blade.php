@@ -1,259 +1,500 @@
 @extends('frontend.master')
 
 @section('content')
-<section class="pageTitle">
-    <div class="container"> </div>
-</section>
-<!--top banner end -->
-<div class="form_section text-left">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 breadmcrumsize">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{url('')}}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Checkout </li>
-                    </ol>
-                </nav>
+
+<!-- Breadcrumb Section Start -->
+    <section class="breadcrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-contain">
+                        <h2>Checkout</h2>
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ url('') }}">
+                                        <i class="fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">Checkout</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- Breadcrumb Section End -->
 
-    <div id="shipping_info_page" class="container">
-        <div class="row">
-
-            <div class="col-md-8 col-sm-12">
-
-                <!-- add new address button here -->
-                <div class="row">
-                    <div class="col-lg-12">
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p class="text-center text-dark bg-warning text-capitalize fw-700 rounded">
-                                    Proceed to buy with these items
-                                </p>
-                                <p class="border border-1 text-capitalize border-start-0 border-end-0 p-1">
-                                    Select a Shipping address
-                                </p>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-
-                <!-- add new address button here -->
-                <div class="row"></div>
-
-                <div class="hotel-form pb-4 pt-2 shadow-none">
-                    <div class="row">
-
-                        @foreach (Auth::user()->addresses as $key => $address)
-                        <div class="col-md-4 col-sm-12">
-                            <div class="d-flex position-relative">
-                                <div class="hotel-form py-4 px-2 mb-3 mt-1 shadow-none w-100 bg-white pt-2 border">
-                                    <div class="px-2">
-                                        <div class="user_location mt-1 pb-2">
-                                            <label for="payment_method_bacs d-flex">
-                                                <input onclick="saveShippingCharge(this)" id="{{ $address->id }}" class="input-radio" type="radio" name="address_id"
-                                                    value="{{ $address->id }}" @if ($address->set_default)
-                                                checked
-                                                @endif required>
-                                                @php
-                                                $addid = $address->id;
-                                                @endphp
-                                                <span for="{{ $address->id }}" class="userf-name">{{$address->address_type}}</span>
-                                            </label>
-
+    <!-- Checkout section Start -->
+    <section class="checkout-section-2 section-b-space">
+        <div class="container-fluid-lg">
+		<form action="{{ route('payment.checkout') }}" class="form-default" role="form" method="POST" id="checkout-form">
+                        @csrf
+            <div class="row g-sm-4 g-3">
+                <div class="col-lg-8">
+                    <div class="left-sidebar-checkout">
+                        <div class="checkout-detail-box">
+                            <ul>
+                                <li>
+                                    <div class="checkout-icon">
+                                        <lord-icon target=".nav-item" src="https://cdn.lordicon.com/ggihhudh.json"
+                                            trigger="loop-on-hover"
+                                            colors="primary:#121331,secondary:#646e78,tertiary:#0baf9a"
+                                            class="lord-icon">
+                                        </lord-icon>
+                                    </div>
+                                    <div class="checkout-box">
+                                        <div class="checkout-title">
+                                            <h4>Delivery Address</h4>
                                         </div>
-                                        <div class="user_name mt-1">
-                                            <span class="userf-name">
-                                                {{$address->first_name.' '.$address->last_name}}
-                                            </span>
+
+                                        <div class="checkout-detail">
+                                            <div class="row g-4">
+											@foreach (Auth::user()->addresses as $key => $address)
+                                                <div class="col-xxl-6 col-lg-12 col-md-6">
+                                                    <div class="delivery-address-box">
+                                                        <div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name=""
+                                                                    id="{{ $address->id }}" value="{{ $address->id }}" @if($address->set_default==1)  checked="checked"  @endif  required >
+															</div>
+															@php
+																$addid = $address->id;
+															@endphp
+                                                            <div class="label">
+                                                                <label style="text-transform:uppercase;">{{$address->address_type}}</label>
+                                                            </div>
+
+                                                            <ul class="delivery-address-detail">
+                                                                <li>
+                                                                    <h4 class="fw-500">{{$address->first_name.' '.$address->last_name}}</h4>
+                                                                </li>
+																<li>
+                                                                    <p class="text-content"><span class="text-title">Address: </span>{{$address->house_no}}, {{$address->area}},
+                                                {{$address->city}}, {{$address->state}} - {{$address->pin}}</p>
+                                                                </li>
+
+                                                                <li>
+                                                                    <h6 class="text-content"><span class="text-title">Pin Code:</span> {{$address->pin}}</h6>
+                                                                </li>
+
+                                                                <li>
+                                                                    <h6 class="text-content mb-0"><span class="text-title">Phone :</span> +91-{{ $address->phone }}</h6>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+											@endforeach
+                                                 @if($addressCount>0)
+													<input type="hidden" name="address_id" id="adid" value="{{$addid}}">
+												@else
+													<input type="hidden" name="address_id" id="adid" value="">
+												@endif
+                                            </div>
                                         </div>
-                                        <div class="phone_number mt-1">
-                                            <span class="user-phone d-flex">
-                                                <i class="fa fa-phone p-2 border rounded-circle" aria-hidden="true"></i>
-                                                +91-{{ $address->phone }}
-                                            </span>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="checkout-icon">
+                                        <lord-icon target=".nav-item" src="https://cdn.lordicon.com/oaflahpk.json"
+                                            trigger="loop-on-hover" colors="primary:#0baf9a" class="lord-icon">
+                                        </lord-icon>
+                                    </div>
+                                    <div class="checkout-box">
+                                        <div class="checkout-title">
+                                            <h4>Delivery Option</h4>
                                         </div>
-                                        <div class="user_email mt-1">
-                                            <span class="user-email d-flex">
-                                                <i class="fa fa-map-marker p-2 border rounded-circle"
-                                                    aria-hidden="true"></i> {{$address->house_no}}, {{$address->area}},
-                                                {{$address->city}}, {{$address->state}} {{$address->pin}}
-                                            </span>
-                                        </div>
-                                        @if($address->set_default=='1')
-                                            <div class="user_email edit-address mt-1 d-flex">
-                                                <div class="w-100">
-                                                    <button class="btn btn-success float-start add-buttonser">Default&nbsp;Address</button>
+
+                                        <div class="checkout-detail">
+                                            <div class="row g-4">
+                                                <div class="col-xxl-6">
+                                                    <div class="delivery-option">
+                                                        <div class="delivery-category">
+                                                            <div class="shipment-detail">
+                                                                <div
+                                                                    class="form-check custom-form-check hide-check-box">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="standard" id="standard" checked>
+                                                                    <label class="form-check-label"
+                                                                        for="standard">Standard
+                                                                        Delivery Option</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {{--<div class="col-xxl-6">
+                                                    <div class="delivery-option">
+                                                        <div class="delivery-category">
+                                                            <div class="shipment-detail">
+                                                                <div
+                                                                    class="form-check mb-0 custom-form-check show-box-checked">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="standard" id="future">
+                                                                    <label class="form-check-label" for="future">Future
+                                                                        Delivery Option</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>--}}
+
+                                                <div class="col-12 future-box">
+                                                    <div class="future-option">
+                                                        <div class="row g-md-0 gy-4">
+                                                            <div class="col-md-6">
+                                                                <div class="delivery-items">
+                                                                    <div>
+                                                                        <h5 class="items text-content"><span>3
+                                                                                Items</span>@
+                                                                            $693.48</h5>
+                                                                        <h5 class="charge text-content">Delivery Charge
+                                                                            $34.67
+                                                                            <button type="button" class="btn p-0"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="top"
+                                                                                title="Extra Charge">
+                                                                                <i
+                                                                                    class="fa-solid fa-circle-exclamation"></i>
+                                                                            </button>
+                                                                        </h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <form
+                                                                    class="form-floating theme-form-floating date-box">
+                                                                    <input type="date" class="form-control">
+                                                                    <label>Select Date</label>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        @endif
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                        @endforeach
-
-                        <div class="col-md-4 col-sm-12">
-                            <div class="d-flex position-relative">
-                                <div class="hotel-form py-4 px-2 mb-3 mt-1 shadow-none w-100 bg-white pt-4 border">
-                                    <a href="javscript:void(0);" data-toggle="modal" data-target="#myModaladdress">
-                                        <div class="px-2">
-                                            <div class="user_location mt-1 pb-2 text-center">
-                                                <i class="fa fa-plus border p-3 rounded-circle" aria-hidden="true"></i>
-                                                <h6 class="m-3">
-                                                    Add New Address
-                                                </h6>
-                                            </div>
-
                                         </div>
-                                    </a>
+                                    </div>
+                                </li>
 
-                                </div>
+                                <li>
+                                    <div class="checkout-icon">
+                                        <lord-icon target=".nav-item" src="https://cdn.lordicon.com/qmcsqnle.json"
+                                            trigger="loop-on-hover" colors="primary:#0baf9a,secondary:#0baf9a"
+                                            class="lord-icon">
+                                        </lord-icon>
+                                    </div>
+                                    <div class="checkout-box">
+                                        <div class="checkout-title">
+                                            <h4>Payment Option</h4>
+                                        </div>
 
-                            </div>
-                        </div>
-                    </div>
+                                        <div class="checkout-detail">
+                                            <div class="accordion accordion-flush custom-accordion"
+                                                id="accordionFlushExample">
+                                                <div class="accordion-item">
+                                                    <div class="accordion-header" id="flush-headingFour">
+                                                        <div class="accordion-button collapsed"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#flush-collapseFour">
+                                                            <div class="custom-form-check form-check mb-0">
+                                                                <label class="form-check-label" for="cash"><input class="form-check-input mt-0" type="radio" value="cash_on_delivery" name="payment_option" id="cash" checked> Cash On Delivery</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="flush-collapseFour"
+                                                        class="accordion-collapse collapse show"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <p class="cod-review">Pay digitally on our QR Code. Cash may not be accepted in COVID restricted
+                                                                areas. <a href="javascript:void(0)">Know more.</a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                </div>
-                <div class="col-md-12">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                                                <div class="accordion-item">
+                                                    <div class="accordion-header" id="flush-headingOne">
+                                                        <div class="accordion-button collapsed"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#flush-collapseOne">
+                                                            <div class="custom-form-check form-check mb-0">
+                                                                <label class="form-check-label" for="credit"><input class="form-check-input mt-0" value="online" type="radio" name="payment_option" id="credit"> Pay Online</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <div class="row g-2">
+                                                                <div class="col-12">
+                                                                    <div class="payment-method">
+                                                                        <div
+                                                                            class="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                                            <input type="text" class="form-control"
+                                                                                id="credit2"
+                                                                                placeholder="Enter Credit & Debit Card Number">
+                                                                            <label for="credit2">Enter Credit & Debit
+                                                                                Card Number</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-xxl-4">
+                                                                    <div
+                                                                        class="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                                        <input type="text" class="form-control"
+                                                                            id="expiry" placeholder="Enter Expiry Date">
+                                                                        <label for="expiry">Expiry Date</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-xxl-4">
+                                                                    <div
+                                                                        class="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                                        <input type="text" class="form-control" id="cvv"
+                                                                            placeholder="Enter CVV Number">
+                                                                        <label for="cvv">CVV Number</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-xxl-4">
+                                                                    <div
+                                                                        class="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                                        <input type="password" class="form-control"
+                                                                            id="password" placeholder="Enter Password">
+                                                                        <label for="password">Password</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="button-group mt-0">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <button
+                                                                                class="btn btn-light shopping-button">Cancel</button>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <button class="btn btn-animation">Use This
+                                                                                Card</button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+												@if(false)
+                                                <div class="accordion-item">
+                                                    <div class="accordion-header" id="flush-headingTwo">
+                                                        <div class="accordion-button collapsed"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#flush-collapseTwo">
+                                                            <div class="custom-form-check form-check mb-0">
+                                                                <label class="form-check-label" for="banking"><input
+                                                                        class="form-check-input mt-0" type="radio"
+                                                                        name="flexRadioDefault" id="banking">Net
+                                                                    Banking</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <h5 class="text-uppercase mb-4">Select Your Bank
+                                                            </h5>
+                                                            <div class="row g-2">
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="bank1">
+                                                                        <label class="form-check-label"
+                                                                            for="bank1">Industrial & Commercial
+                                                                            Bank</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="bank2">
+                                                                        <label class="form-check-label"
+                                                                            for="bank2">Agricultural Bank</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="bank3">
+                                                                        <label class="form-check-label" for="bank3">Bank
+                                                                            of America</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="bank4">
+                                                                        <label class="form-check-label"
+                                                                            for="bank4">Construction Bank Corp.</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="bank5">
+                                                                        <label class="form-check-label" for="bank5">HSBC
+                                                                            Holdings</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="bank6">
+                                                                        <label class="form-check-label"
+                                                                            for="bank6">JPMorgan Chase & Co.</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12">
+                                                                    <div class="select-option">
+                                                                        <div class="form-floating theme-form-floating">
+                                                                            <select
+                                                                                class="form-select theme-form-select">
+                                                                                <option value="hsbc">HSBC Holdings
+                                                                                </option>
+                                                                                <option value="loyds">Lloyds Banking
+                                                                                    Group</option>
+                                                                                <option value="natwest">Nat West Group
+                                                                                </option>
+                                                                                <option value="Barclays">Barclays
+                                                                                </option>
+                                                                                <option value="other">Others Bank
+                                                                                </option>
+                                                                            </select>
+                                                                            <label>Select Other Bank</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="accordion-item">
+                                                    <div class="accordion-header" id="flush-headingThree">
+                                                        <div class="accordion-button collapsed"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#flush-collapseThree">
+                                                            <div class="custom-form-check form-check mb-0">
+                                                                <label class="form-check-label" for="wallet"><input
+                                                                        class="form-check-input mt-0" type="radio"
+                                                                        name="flexRadioDefault" id="wallet">My
+                                                                    Wallet</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <h5 class="text-uppercase mb-4">Select Your Wallet
+                                                            </h5>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <label class="form-check-label"
+                                                                            for="amazon"><input
+                                                                                class="form-check-input mt-0"
+                                                                                type="radio" name="flexRadioDefault"
+                                                                                id="amazon">Amazon Pay</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="gpay">
+                                                                        <label class="form-check-label"
+                                                                            for="gpay">Google Pay</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="airtel">
+                                                                        <label class="form-check-label"
+                                                                            for="airtel">Airtel Money</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="paytm">
+                                                                        <label class="form-check-label"
+                                                                            for="paytm">Paytm Pay</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="jio">
+                                                                        <label class="form-check-label" for="jio">JIO
+                                                                            Money</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="custom-form-check form-check">
+                                                                        <input class="form-check-input mt-0"
+                                                                            type="radio" name="flexRadioDefault"
+                                                                            id="free">
+                                                                        <label class="form-check-label"
+                                                                            for="free">Freecharge</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+												@endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
-                    @endif
-                </div>
-
-                <div id="myModaladdress" class="modal fade prolidneis" role="dialog">
-                    <div class="modal-dialog w-50" id="modal-dialog45">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="box-soldid1back box-soldid2">
-                                </div>
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <!--  <h2 style="    font-size: 22px; text-transform: uppercase;    text-align: center; font-weight: 600;"></h2> -->
-                                <div class="border-bottom1 border-color-111 mt-0 mb-3">
-                                    <h3 class="section-title section-title__sm mb-0 pb-0 font-size-18 mt-0">Add New
-                                        Address</h3>
-                                    <div class="deals">
-                                        <hr class="mt-2">
-                                    </div>
-                                </div>
-
-                                <form class="row" autocomplete="off" method="post" action="{{route('addAddress')}}">
-                                    @csrf
-                                    <div class="col-md-12">
-                                        @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="text" class="form-control" name="first_name" placeholder="First Name" aria-label="First Name" required requireddata-msg="Please enter a valid First Name." data-error-class="u-has-error" data-success-class="u-has-success">
-                                        </div>
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="text" class="form-control" name="last_name" placeholder="Last Name"  aria-label="Last Name" required requireddata-msg="Please enter a valid Last Name." data-error-class="u-has-error" data-success-class="u-has-success">
-                                        </div>
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="text" class="form-control" name="phone" placeholder="Phone No." aria-label="Phone No" required requireddata-msg="Please enter a valid Phone No." data-error-class="u-has-error" data-success-class="u-has-success">
-                                        </div>
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="number" class="form-control" minlength="6" maxlength="6" name="pin" id="pincode" required  placeholder="Pin Code" aria-label="Pin Code" requireddata-msg="Please enter a valid Pin Code." data-error-class="u-has-error" data-success-class="u-has-success">
-                                            <span class="text-danger" id='wrong_pincode'></span>
-                                        </div>
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="text" class="form-control" onclick="get_state_city()" name="house_no" required placeholder="House/Plot No" aria-label="Email address" requireddata-msg="Please enter a valid email address." data-error-class="u-has-error" data-success-class="u-has-success">
-                                        </div>
-                                        <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="text" class="form-control" name="address" required placeholder="Full Address" aria-label="Full address" >
-                                        </div>
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="text" class="form-control" name="area" required placeholder="Street/Locality/Area" aria-label="Area" requireddata-msg="Please enter a valid email address." data-error-class="u-has-error" data-success-class="u-has-success">
-                                        </div>
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                            <input type="text" class="form-control" name="city" required id="cityid" placeholder="City" >
-                                        </div>
-                                    <div class="js-form-message form-group col-md-6 mb-3">
-                                        <input type="text" class="form-control" name="state" required id="stateid" placeholder="State">
-                                        </div>
-                                    <div class="js-form-message form-group col-md-12 mb-3">
-                                        <ul class="list-unstyled d-flex">
-
-                                            <li class="m-3 mt-0 mb-0">
-                                                <label for="office">
-                                                    <input id="office" class="input-radio" type="radio" data-order_button_text="" value="Office" name="address_type">
-                                                    <span>Office </span>
-                                                </label>
-                                            </li>
-                                            <li class="m-3 mt-0 mb-0">
-                                                <label for="Home">
-                                                    <input type="radio" data-order_button_text="Proceed to PayPal" value="Home" name="address_type" class="input-radio" id="Home">
-                                                    <span>Home  </span>
-                                                </label>
-                                            </li>
-
-                                            <li class="m-3 mt-0 mb-0">
-                                                <label for="other">
-                                                    <input type="radio" data-order_button_text="Proceed to PayPal" value="Other" name="address_type" class="input-radio" id="other"  >
-                                                    <span>Other  </span>
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="mb-600 d-flex w-100">
-                                        <div class="mb-3 w-auto"><button onclick="window.location.href='{{url('profile')}}'" class="btn edit-address1_1 btn-primary-dark-w px-5 w-100">Cancel</button></div>
-                                        <div class="mb-3 w-50 mx-3"><button type="submit" class="btn edit-address1_1 btn-primary-dark-w px-5 w-auto">Save Address</button></div>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <div class="colampoxe m-0  pt-1 mt-0">
-                    <div class="border-bottom1 border-color-111 mt-0 mb-3">
-                        <h3 class="section-title section-title__sm mb-0 pb-0 mt-3 font-size-18">Your Orders</h3>
-                        <div class="deals">
-                            <hr>
-                        </div>
-                    </div>
+                <div class="col-lg-4">
+                    <div class="right-side-summery-box">
+                        <div class="summery-box-2">
+                            <div class="summery-header">
+                                <h3>Order Summery</h3>
+                            </div>
 
-
-                    <div class="table-responsive box-shadow">
-
-                        <table class="table cart checkout border">
-                            <thead>
-                                <tr>
-                                    <th class="cart-product-thumbnail">Product</th>
-                                    <th class="cart-product-name">Description</th>
-                                    <th class="cart-product-quantity">Quantity</th>
-                                    <th class="cart-product-subtotal">Total</th>
-                                    <th class="cart-product-subtotal">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
+                            <ul class="summery-contain">
+							@php
                                 $subtotal = 0;
                                 $tax = 0;
                                 $shipping = 0;
@@ -271,200 +512,98 @@
 
                                 $product_name_with_choice = $product->getTranslation('name');
                                 if ($cartItem['variant'] != null) {
-                                $product_name_with_choice = $product->getTranslation('name').' - '.$cartItem['variant'];
+									$product_name_with_choice = $product->getTranslation('name').' - '.$cartItem['variant'];
                                 }
-                                @endphp
-                                <tr class="cart_item border-bottom">
-
-                                    <td class="cart-product-thumbnail">
-                                        <a href="#"><img width="64" height="64"
-                                                src="{{ uploaded_asset($cartItem->product->thumbnail_img) }}"
-                                                alt=" "></a>
-                                    </td>
-
-                                    <td class="cart-product-name">
-                                        <a href="#">{{$cartItem->product->name}}</a>
-                                    </td>
-
-                                    <td class="quantity">
-                                        <span>{{$cartItem->quantity}}</span>
-                                    </td>
-
-                                    <td class="cart-product-subtotal">
-                                        <span class="amount">₹ {{$cartItem->quantity*$cartItem->price}}</span>
-                                    </td>
-
-                                    {{--<td class="cart-product-subtotal1">
-                                        <a href="javascript:void(0);">
-                                            <span class="remove  amount"><i class="fa fa-times"
-                                                    aria-hidden="true"></i></span>
-                                        </a>
-                                    </td>--}}
-
-                                </tr>
-                                @endforeach
-
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="cart_item coupon-check p-3 d-none">
-                        <div class="row">
-                            <div class="col-md-8 col-sm-6 col-xs-12">
-                                <input type="text" value="" class="dart-form-control" placeholder="Enter Coupon Code..">
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <a href="#" class="btn normal-btn dart-btn-xs">Apply Coupon</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-
-            <div class="col-md-4 col-sm-12">
-                <div class="col-sidkildw mt-4">
-                    <div class=" boxcol  product-list-cart p-4 pt-2 pb-2">
-                        <div class="border-bottom1 border-color-11 mt-3 mb-3">
-                            <h3 class="section-title section-title__sm mb-0 pb-0 font-size-18"> Cart Totals</h3>
-                            <div class="deals">
-                                <hr>
-                            </div>
-                        </div>
+                            @endphp
+                                <li>
+                                    <img src="{{ uploaded_asset($cartItem->product->thumbnail_img) }}" class="img-fluid blur-up lazyloaded checkout-image" alt="">
+                                    <h4>{{ \Illuminate\Support\Str::limit($cartItem->product->name, 36, '...') }} <span>X {{$cartItem->quantity}}</span></h4>
+                                    <h4 class="price">{{single_price($cartItem->quantity*$cartItem->price)}}</h4>
+                                </li>
+							@endforeach
+                                 
+                            </ul>
 								@php
 									if($subtotal>=199){
 										$delivery_charge = 0;
 									}else{
-										$delivery_charge = 19.00;
+										$delivery_charge = 19;
 									}
 									$amount_payable = $subtotal+$delivery_charge;
 								@endphp
-                        <div class="table-responsive cartpage  product-list-cart">
-                            <table class="table3 table-cartsummary border">
-                                <tbody>
-                                    <tr class="bd-nn1 mb-3">
-                                        <td class="w-75 border-0">Items</td>
-                                        <td class="w-25 border-0"><span>{{ count($carts) }} </span></td>
-                                    </tr>
-                                    <tr class="bd-nn1 mb-3">
-                                        <td class="w-75 border-0">Subtotal</td>
-                                        <td class="w-25 border-0"><span>{{ single_price($subtotal) }}</span></td>
-                                    </tr>
-									{{-- <tr class="bd-nn1 mb-3">
-                                        <td class="w-75 border-0">Tax</td>
-                                        <td class="w-25 border-0"><span>{{ single_price($tax) }}</span></td>
-                                    </tr>--}}
-                                    <tr class="bd-nn1 mb-3 border-0">
-                                        <td class="w-75  border-0">Shipping</td>
-                                        <td class="w-25  border-0"><span id="total_shipping_cost">{{ $delivery_charge }}</span></td>
-                                    </tr>
-                                    @if ($carts->sum('discount') > 0)
-                                    <tr class="bd-nn1 mb-3 border-0">
-                                        <td class="w-75  border-0">Coupon Discount</td>
-                                        <td class="w-25  border-0"><span>{{ single_price($carts->sum('discount'))
-                                                }}</span></td>
-                                    </tr>
-                                    @endif
-                                    @php
-                                    $total = $subtotal+$tax+$shipping;
+                            <ul class="summery-total">
+                                <li>
+                                    <h4>Subtotal</h4>
+                                    <h4 class="price">{{ single_price($subtotal) }}</h4>
+                                </li>
 
-                                    if ($carts->sum('discount') > 0){
-                                    $total -= $carts->sum('discount');
-                                    }
-                                    @endphp
-                                    <tr class="amount-pay border-bottom">
-                                        <td class="w-75">Payable Total Amount</td>
-                                        <td class="w-25"><span>{{ single_price($amount_payable) }}</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <li>
+                                    <h4>Shipping</h4>
+                                    <h4 class="price">{{ single_price($delivery_charge) }}</h4>
+                                </li>
+
+                                {{--<li>
+                                    <h4>Tax</h4>
+                                    <h4 class="price">$29.498</h4>
+                                </li>
+
+                                <li>
+                                    <h4>Coupon/Code</h4>
+                                    <h4 class="price">$-23.10</h4>
+                                </li>--}}
+
+                                <li class="list-total">
+                                    <h4>Payable Total Amount</h4>
+                                    <h4 class="price">{{ single_price($amount_payable) }}</h4>
+                                </li>
+                            </ul>
                         </div>
 
-                    </div>
+                        {{--<div class="checkout-offer">
+                            <div class="offer-title">
+                                <div class="offer-icon">
+                                    <img src="https://themes.pixelstrap.com/fastkart/assets/images/inner-page/offer.svg" class="img-fluid" alt="">
+                                </div>
+                                <div class="offer-name">
+                                    <h6>Available Offers</h6>
+                                </div>
+                            </div>
 
-                    <!-- <form method="POST" action="{{route('pay-on-delivery')}}"> -->
-                    <form action="{{ route('payment.checkout') }}" class="form-default" role="form" method="POST" id="checkout-form">
-                        @csrf
-                        <input type="hidden" name="owner_id" value="{{ $carts[0]['owner_id'] }}">
-
-                        @if($addressCount>0)
-                        <input type="hidden" name="address_id" id="adid" value="{{$addid}}">
-                        @else
-                        <input type="hidden" name="address_id" id="adid" value="">
-                        @endif
+                            <ul class="offer-detail">
+                                <li>
+                                    <p>Combo: BB Royal Almond/Badam Californian, Extra Bold 100 gm...</p>
+                                </li>
+                                <li>
+                                    <p>combo: Royal Cashew Californian, Extra Bold 100 gm + BB Royal Honey 500 gm</p>
+                                </li>
+                            </ul>
+                        </div>--}}
+ 
                         @if ($errors->has('address_id'))
                         <span style="font-size:18px;" class="invalid-feedback p-4" role="alert">
                             <strong>{{ $errors->first('address_id') }}</strong>
                         </span>
                         @endif
-
-                        <div class="payments-options p-4 pt-0">
-                            <div class="row">
-                                @if(get_setting('razorpay') == 1)
-                                    <div class="col-6 col-md-6">
-                                        <label class="aiz-megabox d-block mb-3">
-                                            <input value="razorpay" class="online_payment" type="radio" name="payment_option" checked>
-                                            <span class="d-block p-3 aiz-megabox-elem">
-                                                <img src="{{ static_asset('assets/img/cards/rozarpay.png')}}" class="img-fluid mb-2">
-                                                <span class="d-block text-center">
-                                                    <span class="d-block fw-600 fs-15">{{ translate('Razorpay')}}</span>
-                                                </span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endif
-
-                                @if(get_setting('cash_payment') == 1)
-                                    @php
-                                        $cod_on = 1;
-                                        foreach($carts as $cartItem){
-                                            $product = \App\Models\Product::find($cartItem['product_id']);
-                                            if($product['digital'] == 1){
-                                                $digital = 1;
-                                            }
-                                            if($product['cash_on_delivery'] == 0){
-                                                $cod_on = 0;
-                                            }
-                                        }
-                                    @endphp
-                                    @if($cod_on == 1)
-                                        <div class="col-6 col-md-6">
-                                            <label class="aiz-megabox d-block mb-3">
-                                                <input value="cash_on_delivery" class="online_payment" type="radio" name="payment_option" checked>
-                                                <span class="d-block p-3 aiz-megabox-elem">
-                                                    <img src="{{ static_asset('assets/img/cards/cod.png')}}" class="img-fluid mb-2">
-                                                    <span class="d-block text-center">
-                                                        <span class="d-block fw-600 fs-15">{{ translate('Cash on Delivery')}}</span>
-                                                    </span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    @endif
-                                @endif
-                            </div>
-
-                            <div class="row">
+							
+							<div class="row mt-3">
                                 <label class="checkbox d-flex align-items-center">
                                     <input type="checkbox" required id="agree_checkbox" style="width:20px; height:20px; margin:0px">
                                     <span class="aiz-square-check"></span>
                                     <span style="padding-left:10px">{{ translate('I agree to the Terms & Conditions.')}}</span>
                                 </label>
                             </div>
-
-                            <div class="col-6 text-right">
-                                <button type="button" onclick="submitOrder(this)" class="btn btn-primary fw-600">{{ translate('Complete Order')}}</button>
-                            </div>
-                        </div>
-                    </form>
-
+                         
+                     
+                        <button type="button" onclick="submitOrder(this)"  class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Place Order</button>
+                    </div>
                 </div>
             </div>
+			</form>
         </div>
-    </div>
-</div>
+    </section>
+    <!-- Checkout section End -->
+	
+	
 @endsection
 @section('script')
     <script type="text/javascript">

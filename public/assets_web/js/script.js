@@ -1,12 +1,4 @@
-/*-----------------------------------------------------------------------------------
 
- Template Name: Fastkart
- Template URI: themes.pixelstrap.com/Fastkart
- Description: This is Ecommerce website
- Author: Pixelstrap
- Author URI: https://themeforest.net/user/pixelstrap
-
- ----------------------------------------------------------------------------------- */
 
 // 01. Image to background js
 // 02. Shop Page Grid Setting Js
@@ -446,4 +438,73 @@ $(".navbar-toggler-icon-2").click(function () {
 });
 $(".bg-overlay").click(function () {
     $(".bg-overlay, .sidebar-col").removeClass("show");
+});
+
+
+
+
+$(function () {
+    var Accordion = function (el, multiple) {
+        this.el = el || {};
+        this.multiple = multiple || false;
+
+        var links = this.el.find('.article-title');
+        links.on('click', {
+            el: this.el,
+            multiple: this.multiple
+        }, this.dropdown)
+    }
+
+    Accordion.prototype.dropdown = function (e) {
+        var $el = e.data.el;
+        $this = $(this),
+            $next = $this.next();
+
+        $next.slideToggle();
+        $this.parent().toggleClass('open');
+
+        if (!e.data.multiple) {
+            $el.find('.accordion-content').not($next).slideUp().parent().removeClass('open');
+        };
+    }
+    var accordion = new Accordion($('.accordion-container'), false);
+});
+
+$(document).on('click', function (event) {
+    if (!$(event.target).closest('#accordion').length) {
+        $(this.parent).toggleClass('open');
+    }
+});
+
+
+//slider product details
+$(document).on('click', '.button-plus,.button-minus', function (e) {
+    e.preventDefault()
+    if ($(this).hasClass("button-plus")) {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val()) + 1;
+        $(this).parents('.packageadd').find("[type='number']").val(val);
+    } else {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val());
+        if (!isNaN(val) && val > 1) {
+            $(this).parents('.packageadd').find("[type='number']").val(val - 1);
+        } else {
+            $(this).parents('.packageadd').find("[type='number']").val(1);
+        }
+    }
+});
+
+
+$(document).on('click', '.button-plusss,.button-minusss', function (e) {
+    e.preventDefault()
+    if ($(this).hasClass("button-plus")) {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val()) + 1;
+        $(this).parents('.packageadd').find("[type='number']").val(val);
+    } else {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val());
+        if (!isNaN(val) && val > 1) {
+            $(this).parents('.packageadd').find("[type='number']").val(val - 1);
+        } else {
+            $(this).parents('.packageadd').find("[type='number']").val(1);
+        }
+    }
 });
