@@ -85,7 +85,7 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/style.css')}}" media="all">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/custom_style.css')}}" media="all">
     <link rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/vendors/ion.rangeSlider.min.css')}}">
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
         @yield('style')
 
@@ -1066,6 +1066,8 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <script src="{{static_asset('assets_web/js/filter-sidebar.js')}}"></script>
     <!-- Quantity js -->
     <script src="{{static_asset('assets_web/js/ion.rangeSlider.min.js')}}"></script>
+    <!-- Lord-icon Js -->
+    <script src="{{static_asset('assets_web/js/lusqsztk.js')}}"></script>
 
 
 

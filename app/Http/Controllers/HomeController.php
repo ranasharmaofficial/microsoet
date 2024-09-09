@@ -1614,7 +1614,7 @@ class HomeController extends Controller
                 }
             }
         }
-
+        // dd($str);
         $product_stock = $product->stocks->where('variant', $str)->first();
         $price = $product_stock->price;
         $sku = $product_stock->sku;

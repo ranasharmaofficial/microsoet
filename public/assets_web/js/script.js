@@ -475,3 +475,36 @@ $(document).on('click', function (event) {
         $(this.parent).toggleClass('open');
     }
 });
+
+
+//slider product details
+$(document).on('click', '.button-plus,.button-minus', function (e) {
+    e.preventDefault()
+    if ($(this).hasClass("button-plus")) {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val()) + 1;
+        $(this).parents('.packageadd').find("[type='number']").val(val);
+    } else {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val());
+        if (!isNaN(val) && val > 1) {
+            $(this).parents('.packageadd').find("[type='number']").val(val - 1);
+        } else {
+            $(this).parents('.packageadd').find("[type='number']").val(1);
+        }
+    }
+});
+
+
+$(document).on('click', '.button-plusss,.button-minusss', function (e) {
+    e.preventDefault()
+    if ($(this).hasClass("button-plus")) {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val()) + 1;
+        $(this).parents('.packageadd').find("[type='number']").val(val);
+    } else {
+        var val = parseInt($(this).parents('.packageadd').find("[type='number']").val());
+        if (!isNaN(val) && val > 1) {
+            $(this).parents('.packageadd').find("[type='number']").val(val - 1);
+        } else {
+            $(this).parents('.packageadd').find("[type='number']").val(1);
+        }
+    }
+});

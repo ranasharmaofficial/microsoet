@@ -40,7 +40,7 @@ class SearchController extends Controller
         print_r('<br>');
         print_r('Completed');
     }
-   
+
     public function index(Request $request, $category_id = null, $brand_id = null)
     {
         $category = "";
@@ -52,7 +52,7 @@ class SearchController extends Controller
         $max_price = $request->max_price;
         $seller_id = $request->seller_id;
         $current_timestamp = strtotime(date('Y-m-d H:i:s'));
-       
+
         $selected_attribute_values = array();
 
         $first_five_color = Color::orderBy('id', 'desc')->limit(5)->get();
@@ -81,6 +81,7 @@ class SearchController extends Controller
             $attribute_ids = AttributeCategory::whereIn('category_id', $category_ids)->pluck('attribute_id')->toArray();
             $attributes = Attribute::whereIn('id', $attribute_ids)->get();
         }
+        // dd($attributes);
         $product_list = $products->whereIn('category_id', $category_ids);
         $min_price_value = $product_list->min('unit_price'); //Added by Avi
         $max_price_value = $product_list->max('unit_price'); //Added by Avi
@@ -97,7 +98,7 @@ class SearchController extends Controller
                 }
             });
 
-        } 
+        }
 
         // get category wise brands, Used on product list page @Avinash
         $get_filter_brand = $product_list->groupBy('brand_id')->orderBy('brand_id', 'ASC')->get()->pluck('brand_id');
@@ -105,7 +106,9 @@ class SearchController extends Controller
 
         // get category wise selected product attributes, Used on product list page @Avinash
         $get_filter_attribute = $product_list->pluck('attributes');
+
         $decode_attribute = json_decode($get_filter_attribute);
+        // dd($decode_attribute);
         $attribute_ids = [];
         foreach($decode_attribute as $attribute){
             $attributes = json_decode($attribute);
@@ -117,7 +120,7 @@ class SearchController extends Controller
             }
         }
         $attributes = Attribute::whereIn('id', $attribute_ids)->orderBy('name', 'ASC')->get();
-       
+        // dd($attributes);
         // get category wise selected product attributes_values, Used on product list page @Avinash
         $get_filter_attribute_choice = $product_list->pluck('choice_options');
         $attribute_choice_value_list = [];
@@ -132,8 +135,8 @@ class SearchController extends Controller
                     if(!in_array($value, $attribute_choice_value_list, true)){
                         array_push($attribute_choice_value_list, $value );
                     }
-                } 
-            }            
+                }
+            }
         }
 
         $selectd_attribute_list = AttributeValue::whereIn('value', $attribute_choice_value_list)->orderBy('value', 'ASC')->get();
@@ -141,10 +144,10 @@ class SearchController extends Controller
         $get_filter_colors = $product_list->pluck('colors');
 
         $product_lists= filter_products($product_list)->with('taxes')->get();
-        
+
 		$categories = Category::where('level', 0)->where('type','1')->orderBy('order_level', 'ASC')->get();
 		$catName = Category::where('id', $category_id)->first();
-        
+
         $checkLevel = Category::find($category_id);
         if($checkLevel->level == 0){
             $first_category = Category::find($category_id);
@@ -179,23 +182,23 @@ class SearchController extends Controller
         }
 
         /** This query used for top/primium products */
-        $top_category = Category::where('slug', $latestslug)->first();
-        $top_category_ids = CategoryUtility::children_ids($top_category->id);
-        $top_category_ids[] = $top_category->id;
+        // $top_category = Category::where('slug', $latestslug)->first();
+        // $top_category_ids = CategoryUtility::children_ids($top_category->id);
+        // $top_category_ids[] = $top_category->id;
 
-        // dd($request->brand);
-        if($checkLevel->level != 0){
-            $top_product_list = Product::whereIn('category_id',$top_category_ids)
-                ->where('is_top_product', 1)
-                ->where('published', 1)
-                ->where('approved', 1)
-                ->orderBy('unit_price', 'asc')
-                ->limit(10)
-                ->get();
-        }else{
-            $top_product_list = [];
-        }
-        
+        // // dd($request->brand);
+        // if($checkLevel->level != 0){
+        //     $top_product_list = Product::whereIn('category_id',$top_category_ids)
+        //         ->where('is_top_product', 1)
+        //         ->where('published', 1)
+        //         ->where('approved', 1)
+        //         ->orderBy('unit_price', 'asc')
+        //         ->limit(10)
+        //         ->get();
+        // }else{
+        //     $top_product_list = [];
+        // }
+
 
         if(Auth::user() != null) {
             $user_id = Auth::user()->id;
@@ -205,18 +208,18 @@ class SearchController extends Controller
             $get_cart_product = ($temp_user_id != null) ? Cart::select('product_id', 'quantity')->where('temp_user_id', $temp_user_id)->get() : [] ;
         }
 
-        foreach($top_product_list as $key => $list){
-            $top_product_list[$key]->is_cart_product = 0;
-            $top_product_list[$key]->cart_quantity = 0;
-            if($get_cart_product != null){
-                foreach($get_cart_product as $cart) {
-                    if($cart->product_id == $list->id){
-                        $top_product_list[$key]->is_cart_product = 1;
-                        $top_product_list[$key]->cart_quantity = $cart->quantity;
-                    }
-                }
-            } 
-        }
+        // foreach($top_product_list as $key => $list){
+        //     $top_product_list[$key]->is_cart_product = 0;
+        //     $top_product_list[$key]->cart_quantity = 0;
+        //     if($get_cart_product != null){
+        //         foreach($get_cart_product as $cart) {
+        //             if($cart->product_id == $list->id){
+        //                 $top_product_list[$key]->is_cart_product = 1;
+        //                 $top_product_list[$key]->cart_quantity = $cart->quantity;
+        //             }
+        //         }
+        //     }
+        // }
         // dd($top_product_list);
 
         $data = [
@@ -235,8 +238,8 @@ class SearchController extends Controller
             // 'attribute_choice_value_list' => $attribute_choice_value_list,
             'products' => $products,
             'catName' => $catName,
-            'top_product_list' => $top_product_list,
-            
+            // 'top_product_list' => $top_product_list,
+
             'first_five_color' => $first_five_color,
             'categories' => $categories,
             'query' => $query,
@@ -256,7 +259,7 @@ class SearchController extends Controller
             'colors' => $colors,
             'selected_color' => $selected_color,
         ];
-
+        // dd($attributes);
         return view('frontend.product_listing', $data);
     }
 
@@ -275,7 +278,7 @@ class SearchController extends Controller
         $category_data = $query->get();
         return $category_data;
     }
-    
+
     // Used for product list through Ajax
     public function get_filtered_products(Request $request){
         $output = '';
@@ -284,7 +287,7 @@ class SearchController extends Controller
         $category = Category::where('slug', $request->slug)->first();
         $category_ids = CategoryUtility::children_ids($category->id);
         $category_ids[] = $category->id;
-        
+
         $product_list = Product::select("*", \DB::raw('(CASE WHEN discount_start_date <= '.$current_timestamp.' and discount_end_date >= '.$current_timestamp.' THEN (CASE WHEN (discount_type = "percent" and discount > 0) THEN (unit_price - (unit_price*discount/100)) ELSE (unit_price - discount) END) ELSE unit_price END) AS discounted_price'));
 
         if($request->slug && count($category_ids) > 0) {
@@ -294,7 +297,7 @@ class SearchController extends Controller
         $conditions = ['is_top_product' => 0, 'published' => 1, 'approved' => 1];
 
         if($request->has('brand')) {
-            // Check Brand in array or not 
+            // Check Brand in array or not
             if(is_array($request->brand)){
                 $brands = $request->brand;
             }else{
@@ -308,7 +311,7 @@ class SearchController extends Controller
         if($request->has('color')) {
             $product_list->whereIn('colors', $request->color);
         }
-        
+
         if($request->has('attribute')) {
             $selected_attribute_values = $request->attribute;
             foreach ($selected_attribute_values as $key => $value) {
@@ -316,7 +319,7 @@ class SearchController extends Controller
                 $product_list->where('choice_options', 'like', '%' .$str. '%');
             }
         }
-        
+
         if($request->min_price != null && $request->max_price != null){
             $product_list->whereBetween(\DB::raw('(SELECT (CASE WHEN discount_start_date <= '.$current_timestamp.' and discount_end_date >= '.$current_timestamp.' THEN (CASE WHEN (discount_type = "percent" and discount > 0) THEN (unit_price - (unit_price*discount/100)) ELSE (unit_price - discount) END) ELSE unit_price END) AS discounted_price FROM products as p1 where p1.id=products.id)'),[$request->min_price,$request->max_price]);
         }
@@ -340,7 +343,7 @@ class SearchController extends Controller
         }
 
         $product_listing = $product_list->where($conditions);
-       
+
         if(Auth::user() != null) {
             $user_id = Auth::user()->id;
             $get_cart_product = Cart::select('product_id', 'quantity')->where('user_id', $user_id)->get();
@@ -350,7 +353,7 @@ class SearchController extends Controller
         }
 
         $product_lists = $product_listing->paginate(20, ['*'], 'page', $pageNumber);
-        
+
         foreach($product_lists as $key => $list){
             $product_lists[$key]->is_cart_product = 0;
             $product_lists[$key]->cart_quantity = 0;
@@ -361,17 +364,17 @@ class SearchController extends Controller
                         $product_lists[$key]->cart_quantity = $cart->quantity;
                     }
                 }
-            } 
+            }
         }
-       
+
         if($product_lists != null){
 			/*foreach($product_lists as $row){
 			    $img  = uploaded_asset($row->thumbnail_img);
-                $qty = 0;  if($row->stocks){ foreach ($row->stocks as $key => $stock) { $qty += $stock->qty; }} 
+                $qty = 0;  if($row->stocks){ foreach ($row->stocks as $key => $stock) { $qty += $stock->qty; }}
                 $output .= '<div class="grid-item col-md-3 col-cat-box">
-                    <div class="product-box h-auto pb-3 product_data">';  
+                    <div class="product-box h-auto pb-3 product_data">';
                         if($row->discount_start_date <= $current_timestamp && $row->discount_end_date >= $current_timestamp &&  $row->discount_type == "percent"){
-                            $output .= '<div class="beachs">'.$row->discount.' % Off</div>'; 
+                            $output .= '<div class="beachs">'.$row->discount.' % Off</div>';
                             $discount_price = home_discounted_base_price($row, false);
                             $discount_show_price = home_discounted_base_price($row, true);
                             $original_show_price = home_base_price($row, true);
@@ -382,19 +385,19 @@ class SearchController extends Controller
                             $discount_show_price = home_discounted_base_price($row, true);
                             $original_show_price = home_base_price($row, true);
                         }else{
-                            $discount_price = home_base_price($row, false);  
-                            $discount_show_price = home_base_price($row, true);; 
+                            $discount_price = home_base_price($row, false);
+                            $discount_show_price = home_base_price($row, true);;
                             $original_show_price = '';
                         }
-                        
+
                         $output .= '<a href="'.route('product', $row->slug).'"><img src="'.$img.'" alt="'.$row->name.'" onerror="this.onerror=null;this.src='.static_asset('assets/img/placeholder.jpg').';"></a>';
-                        
+
                         if($row->brand_id != null){
                             $output .= '<div class="discrptions">
                                                 <div class="companyname">'.$row->brand->name.'</div>
                                         </div>';
                         }
-                        
+
                         $output .= '<div class="discrptions">
                             <a href="'.route('product', $row->slug).'">
                                 <h5 class="desclist">'.$row->name.'</h5>
@@ -417,9 +420,9 @@ class SearchController extends Controller
                                 <div class="cart-add cart-add3 products_list ">
                                     <div class="input-group quantity_input mb-0">
                                         <div class="input-group w-auto justify-content-end align-items-center packageadd">
-                                            
+
                                             <input type="button" value="-" class="button-minus border rounded-circle quantity-left-minus icon-shape icon-sm mx-1_1 add_cart_button_minus" data-field="quantity" ';
-                                            
+
                                             if($row->cart_quantity >= 1){
                                                 $output .= '><input type="number" step="1" max="10" value="'.$row->cart_quantity.'" name="quantity" class="quantity quantity-field border-0 text-center w-25 input-number">';
                                             }else{
@@ -434,17 +437,17 @@ class SearchController extends Controller
                             }else{
                                 $output .= '<button class="outofstock">&nbsp;&nbsp;Out&nbsp;of&nbsp;Stock</button><button class="buttonbuynow productBuyNow" disabled style="opacity:0.6;"><i class="fa fa-check" aria-hidden="true"></i> &nbsp;&nbsp;Buy Now</button>';
                             }
-							$output .= '</div>         
+							$output .= '</div>
                     </div>
                 </div>';
 			}
 			*/
-			
+
 			foreach($product_lists as $row){
 				$img  = uploaded_asset($row->thumbnail_img);
-                $qty = 0;  if($row->stocks){ foreach ($row->stocks as $key => $stock) { $qty += $stock->qty; }} 
+                $qty = 0;  if($row->stocks){ foreach ($row->stocks as $key => $stock) { $qty += $stock->qty; }}
 				if($row->discount_start_date <= $current_timestamp && $row->discount_end_date >= $current_timestamp &&  $row->discount_type == "percent"){
-                            $output .= '<div class="beachs">'.$row->discount.' % Off</div>'; 
+                            $output .= '<div class="beachs">'.$row->discount.' % Off</div>';
                             $discount_price = home_discounted_base_price($row, false);
                             $discount_show_price = home_discounted_base_price($row, true);
                             $original_show_price = home_base_price($row, true);
@@ -455,8 +458,8 @@ class SearchController extends Controller
                             $discount_show_price = home_discounted_base_price($row, true);
                             $original_show_price = home_base_price($row, true);
                         }else{
-                            $discount_price = home_base_price($row, false);  
-                            $discount_show_price = home_base_price($row, true);; 
+                            $discount_price = home_base_price($row, false);
+                            $discount_show_price = home_base_price($row, true);;
                             $original_show_price = '';
                         }
 						$brand_details = Brand::where('id', $row->brand_id)->first();
@@ -470,7 +473,7 @@ class SearchController extends Controller
                                                 class="img-fluid blur-up lazyload" alt="">
                                         </a>
 
-                                        
+
                                     </div>
                                 </div>
                                 <div class="product-footer">
@@ -478,11 +481,11 @@ class SearchController extends Controller
 										if($brand_details){
 											$output .=' <span class="span-name">'.$brand_details->name.'</span>';
 										}
-                                        
+
                                        $output .=' <a href="'. route('product', $row->slug) .'">
                                             <h5 class="name">'. \Illuminate\Support\Str::limit($row->name, 36, '...') .'</h5>
                                         </a>
-                                        
+
                                         <h5 class="price"><span class="theme-color">'.$discount_show_price.'</h5>
                                         <div class="add-to-cart-box bg-white d-none">
                                             <button class="btn btn-add-cart addcart-button">Add
@@ -520,8 +523,8 @@ class SearchController extends Controller
             'output' => $output,
             'result' => $product_lists,
             'request' => $request->sort_by,
-            'min_price' => $request->min_price, 
-            'max_price' => $request->max_price, 
+            'min_price' => $request->min_price,
+            'max_price' => $request->max_price,
         ];
 
 		return Response::json([
@@ -530,7 +533,7 @@ class SearchController extends Controller
         ], 200);
 
     }
-    
+
     public function listing(Request $request)
     {
         return $this->index($request);
