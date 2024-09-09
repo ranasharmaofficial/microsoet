@@ -855,11 +855,12 @@ class HomeController extends Controller
     public function profile(Request $request)
     {
         $address = Address::where('user_id', Auth::user()->id)->first();
+        $profile = User::where('id', Auth::user()->id)->first();
         // dd($address);die;
         if (Auth::user()->user_type == 'delivery_boy') {
             return view('delivery_boys.frontend.profile');
         } else {
-            return view('frontend.user.profile', compact('address'));
+            return view('frontend.user.profile', compact('address', 'profile'));
         }
     }
     public function editProfile()
@@ -1611,7 +1612,7 @@ class HomeController extends Controller
                 }
             }
         }
-
+        // dd($str);
         $product_stock = $product->stocks->where('variant', $str)->first();
         $price = $product_stock->price;
         $sku = $product_stock->sku;

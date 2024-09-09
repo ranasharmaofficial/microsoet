@@ -479,6 +479,7 @@ class OrderController extends Controller{
     }
 
     public function store(Request $request){
+        // dd($request->all());
 		request()->validate([
             'address_id' => 'required',
             ],
@@ -532,9 +533,9 @@ class OrderController extends Controller{
         }
 
         if (isset($sl_no)) {
-            $comb_order_id = 'GCT/' . date('my') . '/000' . $last_serial_no;
+            $comb_order_id = 'NMC/' . date('my') . '/000' . $last_serial_no;
         } else {
-            $comb_order_id = 'GCT/' . date('my') . '/000' . $last_serial_no;
+            $comb_order_id = 'NMC/' . date('my') . '/000' . $last_serial_no;
         }
 
         $combined_order = new CombinedOrder;
@@ -588,9 +589,9 @@ class OrderController extends Controller{
                 $product_variation = $cartItem['variation'];
 
                 $product_stocks = $product->stocks;
-
+// dd($product_variation);
                 if($product_variation != ""){
-                    $product_stocks = $product_stock->where('variant', $product_variation);
+                    $product_stocks = $product_stocks->where('variant', $product_variation);
                 }
                 $product_stock = $product_stocks->first();
                 // $product_stock = $product->stocks->where('variant', $product_variation)->first();

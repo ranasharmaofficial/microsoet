@@ -70,7 +70,7 @@ $('.category-slider-2').slick({
     {
         breakpoint: 910,
         settings: {
-            slidesToShow: 4,
+            slidesToShow: 5,
             dots: true,
             autoplay: true,
             autoplaySpeed: 2500,
@@ -79,7 +79,7 @@ $('.category-slider-2').slick({
     {
         breakpoint: 730,
         settings: {
-            slidesToShow: 3,
+            slidesToShow: 5,
             dots: true,
             autoplay: true,
             autoplaySpeed: 2500,
@@ -88,7 +88,7 @@ $('.category-slider-2').slick({
     {
         breakpoint: 410,
         settings: {
-            slidesToShow: 2,
+            slidesToShow: 4,
             dots: true,
             autoplay: true,
             autoplaySpeed: 2500,

@@ -64,12 +64,16 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <title>On-demand last-mile delivery</title>
 
     <!-- Google font -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="{{static_asset('assets_web/fonts/family=Russo+One&display=swap')}}" rel="stylesheet">
-    <link href="{{static_asset('assets_web/fonts/family=Pacifico&display=swap')}}" rel="stylesheet">
-    <link href="{{static_asset('assets_web/fonts/family=Kaushan+Script&display=swap')}}" rel="stylesheet">
-    <link href="{{static_asset('assets_web/fonts/family=Exo+2:wght@400;500;600;700;800;900&display=swap')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{static_asset('assets_web/fonts/family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')}}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap">
+
 
     <!-- bootstrap css -->
     <link id="rtl-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/vendors/bootstrap.css')}}">
@@ -79,8 +83,9 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/slick.css')}}" media="all">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/slick-theme.css')}}" media="all">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/style.css')}}" media="all">
+    <link id="color-link" rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/custom_style.css')}}" media="all">
     <link rel="stylesheet" type="text/css" href="{{static_asset('assets_web/css/vendors/ion.rangeSlider.min.css')}}">
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
         @yield('style')
 
@@ -1033,7 +1038,7 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
 
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+            {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script> --}}
             <script src="{{static_asset('assets_web/js/sweetalert2.all.min.js')}}" type="text/javascript"></script>
 
             <!-- latest jquery-->
@@ -1057,48 +1062,23 @@ $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_N
     <script src="{{static_asset('assets_web/js/script.js')}}"></script>
     <script src="{{static_asset('assets_web/js/theme-setting.js')}}"></script>
     <script src="{{static_asset('assets_web/js/slick/slick.js')}}"></script>
+    <!-- sidebar open js -->
+    <script src="{{static_asset('assets_web/js/filter-sidebar.js')}}"></script>
+    <!-- Quantity js -->
+    <script src="{{static_asset('assets_web/js/ion.rangeSlider.min.js')}}"></script>
+    <!-- Lord-icon Js -->
+    <script src="{{static_asset('assets_web/js/lusqsztk.js')}}"></script>
 
-            <!-- Load static modal  -->
-            <script>
-                $(document).ready(function () {
-                    $("#myModalStatic").modal('show');
-                });
-            </script>
+
+
+
+        <!-- Quantity js -->
+        <script src="{{static_asset('assets_web/js/quantity-2.js')}}"></script>
+
+        <!-- Nav & tab upside js -->
+        <script src="{{static_asset('assets_web/js/nav-tab.js')}}"></script>
+
         @yield('script')
 
-        <!--Commented by AviSingh+Ashish+Deepak-->
-        <!-- <script>
-            var lowerSlider = document.querySelector('#lower');
-            var  upperSlider = document.querySelector('#upper');
-            document.querySelector('#two').value=upperSlider.value;
-            document.querySelector('#one').value=lowerSlider.value;
-            var  lowerVal = parseInt(lowerSlider.value);
-            var upperVal = parseInt(upperSlider.value);
-
-            upperSlider.oninput = function () {
-                lowerVal = parseInt(lowerSlider.value);
-                upperVal = parseInt(upperSlider.value);
-                if (upperVal < lowerVal + 4) {
-                    lowerSlider.value = upperVal - 4;
-                    if (lowerVal == lowerSlider.min) {
-                    upperSlider.value = 4;
-                    }
-                }
-                document.querySelector('#two').value=this.value
-            };
-
-            lowerSlider.oninput = function () {
-                lowerVal = parseInt(lowerSlider.value);
-                upperVal = parseInt(upperSlider.value);
-                if (lowerVal > upperVal - 4) {
-                    upperSlider.value = lowerVal + 4;
-                    if (upperVal == upperSlider.max) {
-                        lowerSlider.value = parseInt(upperSlider.max) - 4;
-                    }
-                }
-                document.querySelector('#one').value=this.value
-            };
-        </script> -->
-        <script src="{{static_asset('assets_web/js/celender.js')}}" type="text/javascript"></script>
     </body>
 </html>

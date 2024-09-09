@@ -150,7 +150,7 @@
 											 </div>
 										@else
 											 <div class="price w-100 mb-0 pb-0">
-												<h3 class="price_actual mb-0 pb-0">
+												<h3 id="total_price" class="price_actual mb-0 pb-0">
 												   {{home_base_price($detailedProduct)}}
 												</h3>
 											 </div>
@@ -225,50 +225,154 @@
                                     </ul>
                                 </div>
 								@endif
-
+@php $qty = 0;  foreach ($detailedProduct->stocks as $key => $stock) { $qty += $stock->qty; } @endphp
 
                                 <div class="note-box product-package">
-                                    <div class="cart_qty qty-box product-qty">
-                                        <div class="input-group">
-                                            <button type="button" class="qty-right-plus" data-type="plus" data-field="">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                            <input class="form-control input-number qty-input" type="text"
-                                                name="quantity" value="0">
-                                            <button type="button" class="qty-left-minus" data-type="minus"
-                                                data-field="">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+									<div class="d-block position-relative">
+								<form id="option-choice-form" class="d-block w-100">
+                            @csrf
+									<input type="hidden" name="id" value="{{ $detailedProduct->id }}">
+                           @if ($detailedProduct->choice_options != null)
+                              @foreach (json_decode($detailedProduct->choice_options) as $key => $choice)
+                                 <div class="tab-finish pb-2">
+                                    <div class="row no-gutters">
+										<div class="col-sm-3">
+                                          {{-- @if(count($attribute_type_arr) > 0)
+                                             @foreach($attribute_type_arr as $attr) --}}
+                                                {{-- <p class="ucfirst"> {{ $attr->getTranslation('name') }}: </p> --}}
+                                                <p class="ucfirst"> {{ \App\Models\Attribute::find($choice->attribute_id)->getTranslation('name') }}: </p>
 
-                                    <button onclick="location.href = '';"
-                                        class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                             {{-- @endforeach
+                                          @endif --}}
+										</div>
+										<div class="col-sm-9">
+											<div class="aiz-radio-inline d-flex">
+                                                @foreach ($choice->values as $key => $value)
+                                                   <label class="aiz-megabox pl-0 mr-2">
+                                                      <input class="opacity" type="radio" name="attribute_id_{{ $choice->attribute_id }}" value="{{ $value }}" @if($key==0) checked @endif>
+                                                      <span class="aiz-megabox-elem rounded d-flex align-items-center justify-content-center py-2 px-3 mb-0 mt-0 mx-2">
+                                                         {{ $value }}
+                                                      </span>
+                                                   </label>
+                                                @endforeach
+                                            </div>
+										</div>
+                                    </div>
+                                 </div>
+                              @endforeach
+                           @endif
+
+                           @if (count(json_decode($detailedProduct->colors)) > 0)
+                              <div class="row no-gutters">
+                                 <div class="col-sm-3">
+                                    <div class="opacity-50 my-0">
+                                       <h6 class="ucfirst">{{ translate('Color')}}:</h6>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-9">
+                                    <div class="aiz-radio-inline">
+                                       @foreach ($color_name as $key => $color)
+                                          <label class="aiz-megabox pl-0 mr-2" data-toggle="tooltip" >
+                                             <input class="opacity" type="radio" name="color" value="{{ $color->name }}" @if($key==0) checked @endif>
+                                             <span class="aiz-megabox-elem rounded d-flex align-items-center justify-content-center p-1 mb-0 mt-0 mx-2">
+                                                   <span class="size-30px d-inline-block rounded" style="background:{{ $color->code }};"></span>
+                                             </span>
+                                          </label>
+                                       @endforeach
+                                    </div>
+                                 </div>
+                              </div>
+                              <hr>
+                              <span class="showoffer" id="loadMore">&plus; Show More</span>
+                              <span class="hideoffer" id="showLess">&minus; Hide More</span>
+                           @endif
+
+
+									<!-- Quantity + Add to cart -->
+									<div class="row no-gutters d-none mb-3">
+										<div class="col-sm-12">
+											<div class="opacity-50 my-2">
+												<p class="ucfirst">{{ translate('Quantity')}}:</p>
+											</div>
+										</div>
+										<div class="col-sm-12">
+											<div class="discrptions_button cart-add d-block cart-add1 products_list mx-2">
+												<div class="input-group quantity_input mb-0">
+													<div class="input-group w-100 justify-content-start align-items-center packageadd">
+														<input type="button" value="-" class="button-minus border rounded-circle quantity-left-minus icon-shape icon-sm mx-1 m-0" data-field="quantity">
+														<input type="number" step="1" min="{{ $detailedProduct->min_qty }}" max="10" value="{{ $detailedProduct->min_qty }}" name="quantity" class="quantity quantity-field border-0 text-center m-0 w-25">
+														<input type="button" value="+" class="button-plus border rounded-circle quantity-right-plus icon-shape icon-sm m-0 lh-0" data-field="quantity"> </div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+
+								<h4 id="" class="stockquantity">
+                           @if($detailedProduct->stock_visibility_state == 'quantity')
+                              <span id="available-quantity">Only {{ $qty }} Items Left!</span>
+                           {{ translate('available')}}
+                           @elseif($detailedProduct->stock_visibility_state == 'text' && $qty >= 1)
+                              {{ translate('In Stock') }}
+                           @endif
+                        </h4>
+						
+						@php
+                                 if(Auth::user() != null) {
+                                    $user_id = Auth::user()->id;
+                                    $temp_user_id = null;
+                                    $check_product_av = App\Models\Cart::where('product_id',$detailedProduct->id)->where('user_id',$user_id)->pluck('quantity')->first();
+                                 } else {
+                                    $check_product_av = App\Models\Cart::where('product_id',$detailedProduct->id)->where('temp_user_id',$temp_user_id)->pluck('quantity')->first();
+                                 }
+                              @endphp
+								<div class=" position-absolute end-0 bottom-0 justify-content-end w-75">
+									<div class="discrptions_button"> </div>
+								</div>
+							</div>
+								</div>
+                                <div class="note-box product-package products_list product_data packageadd">
+								 
+
+                                    
+									@if ($check_product_av=='1')
+                                       <input type="button" value="&minus;" class="button-minus border rounded-circle quantity-left-minus icon-shape icon-sm mx-1 m-0 countnone" data-field="quantity">
+                                    @else
+                                       <input type="button" value="&minus;" class="button-minus add_cart_button_minus border rounded-circle quantity-left-minus icon-shape icon-sm mx-1 m-0 @if($check_product_av<1) countnone @endif" data-field="quantity">
+                                    @endif	
+										 <input type="number" step="1" min="{{ $detailedProduct->min_qty }}" max="10" @if($check_product_av>=1) value="{{ $check_product_av }}" @else value="1" @endif name="quantity" class="quantity quantity-field border-0 text-center m-0 w-25 @if($check_product_av<1) countnone @endif input-number">
+                                 <input type="button" value="&plus;" class="button-plus add_cart_button_plus border rounded-circle quantity-right-plus icon-shape icon-sm m-0 lh-0 @if($check_product_av<1) countnone @endif" data-field="quantity">
+                                 <input type="hidden" value="{{$detailedProduct->id}}" class="prod_id">
+                                 <input type="hidden" id="total_product_price" class="prod_price">
+                                 <button onclick="addToCart()" class="addtocartbut buttonnone addtocartn mrgnlftnone btnneww w-30 @if($check_product_av>=1) countnone @endif">
+                                    <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    Add to Cart
+                                 </button>
+									</br>
+                                 <button onclick="buyNow()" class="addedetoservicecart addtocartn mrgnlftnone btnneww w-70">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    Buy Now {{home_discounted_base_price($detailedProduct)}}
+                                    @if( home_discounted_base_price($detailedProduct, false) != home_base_price($detailedProduct, false))
+                                       <strike style="font-size:11px;">{{home_base_price($detailedProduct)}}</strike>
+                                       <span class="offertxt" style="border:none; font-size:11px;">
+                                          {{$detailedProduct->discount}} @if($detailedProduct->discount_type == "percent") % @else Flat @endif Off
+                                       </span>
+                                    @endif
+                                 </button>
+
+                                  
+								 
                                 </div>
 
                                 <div class="buy-box">
-                                    <a href="wishlist.html">
+                                    <a href="javascript:void(0)">
                                         <i data-feather="heart"></i>
                                         <span>Add To Wishlist</span>
                                     </a>
-
-                                    {{--
-									<a href="compare.html">
-                                        <i data-feather="shuffle"></i>
-                                        <span>Add To Compare</span>
-                                    </a>--}}
-                                </div>
+								</div>
 
                                 <div class="pickup-box">
-                                    <div class="product-title">
-                                        <h4>Store Information</h4>
-                                    </div>
-
-                                    <div class="pickup-detail">
-                                        <h4 class="text-content">Lollipop cake chocolate chocolate cake dessert jujubes.
-                                            Shortbread sugar plum dessert powder cookie sweet brownie.</h4>
-                                    </div>
-								@php $qty = 0;  foreach ($detailedProduct->stocks as $key => $stock) { $qty += $stock->qty; } @endphp
+									@php $qty = 0;  foreach ($detailedProduct->stocks as $key => $stock) { $qty += $stock->qty; } @endphp
                                     <div class="product-info">
                                         <ul class="product-info-list product-info-list-2">
                                             <li>Category : <a href="javascript:void(0)">{{$detailedProduct->category->getTranslation('name') }}</a></li>

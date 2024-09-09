@@ -110,80 +110,8 @@
                                         </svg>
                                     </a>
                                 </li>
-                                <li class="right-side">
-                                    <div class="onhover-dropdown header-badge">
-                                        <button type="button" class="btn p-0 position-relative header-wishlist">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-shopping-cart">
-                                                <circle cx="9" cy="21" r="1"></circle>
-                                                <circle cx="20" cy="21" r="1"></circle>
-                                                <path
-                                                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
-                                                </path>
-                                            </svg>
-                                            <span class="position-absolute top-0 start-100 translate-middle badge">2
-                                                <span class="visually-hidden">unread messages</span>
-                                            </span>
-                                        </button>
-                                        <div class="onhover-div">
-                                            <ul class="cart-list">
-                                                <li class="product-box-contain">
-                                                    <div class="drop-cart">
-                                                        <a href="product-left-thumbnail.html" class="drop-image">
-                                                            <img src="{{ asset('public/assets_web/images/hp2.png') }}"
-                                                                class="blur-up lazyloaded" alt="">
-                                                        </a>
-                                                        <div class="drop-contain">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5>Fantasy Crunchy Choco Chip CookiesHP All-in-One PC
-                                                                    Ryzen 5 7520U 27-inch(68.6cm) FHD IPS Display, 16GB
-                                                                    LPDDR5, 1TB SSD, AMD Radeon Graphics, Wireless
-                                                                    Keyboard and mouse combo, FHD Camera, (Win 11, MSO,
-                                                                    Shell White,</h5>
-                                                            </a>
-                                                            <h6><span>1 x</span> ₹ 73,264</h6>
-                                                            <button class="close-button close_button">
-                                                                <i class="fa-solid fa-xmark"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="product-box-contain">
-                                                    <div class="drop-cart">
-                                                        <a href="product-left-thumbnail.html" class="drop-image">
-                                                            <img src="{{ asset('public/assets_web/images/hp2.png') }}"
-                                                                class="blur-up lazyloaded" alt="">
-                                                        </a>
-                                                        <div class="drop-contain">
-                                                            <a href="product-left-thumbnail.html">
-                                                                <h5>Fantasy Crunchy Choco Chip CookiesHP All-in-One PC
-                                                                    Ryzen 5 7520U 27-inch(68.6cm) FHD IPS Display, 16GB
-                                                                    LPDDR5, 1TB SSD, AMD Radeon Graphics, Wireless
-                                                                    Keyboard and mouse combo, FHD Camera, (Win 11, MSO,
-                                                                    Shell White,</h5>
-                                                            </a>
-                                                            <h6><span>1 x</span> ₹ 73,264</h6>
-                                                            <button class="close-button close_button">
-                                                                <i class="fa-solid fa-xmark"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <div class="price-box">
-                                                <h5>Total :</h5>
-                                                <h4 class="theme-color fw-bold">₹ 73,264x2</h4>
-                                            </div>
-                                            <div class="button-group">
-                                                <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>
-                                                <a href="checkout.html"
-                                                    class="btn btn-sm cart-button theme-bg-color
-                                       text-white">Checkout</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <li id="cart_items" class="right-side">
+                                    @include('frontend.partials.cart')
                                 </li>
                                 <li class="right-side onhover-dropdown">
                                     <div class="delivery-login-box">
@@ -201,24 +129,35 @@
                                             <h5>My Account</h5>
                                         </div>
                                     </div>
+                                    @if (Auth::check() && (Auth::user()->user_type!=='admin'))
                                     <div class="onhover-div onhover-div-login">
                                         <ul class="user-box-name">
                                             <li class="product-box-contain">
                                                 <i></i>
-                                                <a href={{url('/login')}}>User Login</a>
+                                                <a href={{ url('profile') }}>My Profile </a>
                                             </li>
                                             <li class="product-box-contain">
                                                 <i></i>
-                                                <a href={{url('/vendor-login')}}>Vendor Login</a>
+                                                <a href={{url('logout')}}>Logout</a>
                                             </li>
-                                            {{-- <li class="product-box-contain">
-                                                <a href="sign-up.html">Register</a>
-                                            </li>
-                                            <li class="product-box-contain">
-                                                <a href="forgot.html">Forgot Password</a>
-                                            </li> --}}
+
                                         </ul>
                                     </div>
+                                    @else
+                                        <div class="onhover-div onhover-div-login">
+                                            <ul class="user-box-name">
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href={{url('/login')}}>User Login</a>
+                                                </li>
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href={{url('/vendor-login')}}>Vendor Login</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
@@ -227,7 +166,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid-lg header-bottom-s d-none d-md-block">
+    <div class="container-fluid-lg header-bottom-s  d-md-block">
         <div class="row">
             <div class="col-12">
                 <div class="header-nav">
