@@ -855,11 +855,12 @@ class HomeController extends Controller
     public function profile(Request $request)
     {
         $address = Address::where('user_id', Auth::user()->id)->first();
+        $profile = User::where('id', Auth::user()->id)->first();
         // dd($address);die;
         if (Auth::user()->user_type == 'delivery_boy') {
             return view('delivery_boys.frontend.profile');
         } else {
-            return view('frontend.user.profile', compact('address'));
+            return view('frontend.user.profile', compact('address', 'profile'));
         }
     }
     public function editProfile()
@@ -949,18 +950,20 @@ class HomeController extends Controller
             'first_name' => 'required',
             'phone' => 'required|numeric|min:10',
             'pin' => 'required|numeric|min:6',
-            'house_no' => 'required',
-            'area' => 'required',
+            // 'house_no' => 'required',
+            // 'area' => 'required',
             'city' => 'required',
             'state' => 'required',
             'address_type' => 'required',
 
         ]);
+
         $addresspost = Address::create([
             "first_name" => "$request->first_name",
             "last_name" => "$request->last_name",
             "phone" => "$request->phone",
             "pin" => "$request->pin",
+            "postal_code" => "$request->pin",
             "house_no" => "$request->house_no",
             "area" => "$request->area",
             "address" => "$request->address",

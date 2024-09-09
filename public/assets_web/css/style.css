@@ -46457,7 +46457,7 @@
       display: block;
       width: 100%;
       padding: 10px;
-      margin-bottom: 10px;
+      /* margin-bottom: 10px; */
       border: 1px solid #ccc;
       border-radius: 4px;
   }
@@ -46541,4 +46541,17 @@
       color: green;
       font-size: 12px;
       font-weight: normal;
+  }
+
+
+  .product-wrapper .slick-dots{
+    display: none !important;
+  }
+
+  .category-slider-2{
+    padding-top: 11px;
+  }
+
+  .product-wrapper.slick-slider.slick-dotted{
+    padding-top: 70px;
   }
