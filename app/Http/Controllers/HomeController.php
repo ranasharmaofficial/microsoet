@@ -18,6 +18,7 @@ use App\Models\User;
 use App\Models\Seller;
 use App\Models\Shop;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\ServiceOrder;
 use App\Models\BusinessSetting;
 use App\Models\Coupon;
@@ -36,6 +37,7 @@ use App\Models\Attribute;
 use App\Models\Color;
 use App\Models\ProductNotify;
 use App\Models\ShippingManagementTable;
+use App\Models\CombinedOrder;
 use Cookie;
 // use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -856,12 +858,19 @@ class HomeController extends Controller
     {
         $address = Address::where('user_id', Auth::user()->id)->first();
         $profile = User::where('id', Auth::user()->id)->first();
-        // dd($address);die;
-        if (Auth::user()->user_type == 'delivery_boy') {
-            return view('delivery_boys.frontend.profile');
-        } else {
-            return view('frontend.user.profile', compact('address', 'profile'));
+        $userid = Auth::user()->id;
+        $orders = Order::where('user_id', $userid)->get();
+
+        $combined_order = CombinedOrder::where('user_id', Auth::user()->id)->get();
+
+        if($combined_order){
+            // $order_details = OrderDetail::where('combined_order_id', $combined_order->id)->get();
+            return view('frontend.user.profile', compact('address', 'profile','orders','combined_order'));
         }
+        else{
+            return view('frontend.user.profile', compact('address', 'profile','orders'));
+        }
+        
     }
     public function editProfile()
     {
@@ -876,6 +885,21 @@ class HomeController extends Controller
     public function bankDetail()
     {
         return view('frontend.user.mybankdetail');
+    }
+    public function addressIndex()
+    {
+        $data = Address::orderBy('created_at', 'desc')->get();
+        if ($data->count() > 0) {
+            return response()->json([
+                'status' => 200,
+                'data' => $data
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'data' => "No Records found"
+            ], 404);
+        }
     }
     public function updateProfile(Request $request)
     {
@@ -921,7 +945,7 @@ class HomeController extends Controller
             'phone' => 'required|numeric|min:13',
             'pin' => 'required|numeric|min:6',
             'area' => 'required',
-            'house_no' => 'required',
+            // 'house_no' => 'required',
             'user_id' => 'required',
             'state' => 'required',
             'city' => 'required',
@@ -973,10 +997,22 @@ class HomeController extends Controller
             "set_default" => 1,
             "user_id" => Auth::user()->id,
         ]);
+
         if ($addresspost) {
-            return redirect()->back()->with(session()->flash('alert-success', 'Address Added Successfully!.'));
+            return response()->json([
+                'status' => 200,
+                'message' => 'Address Added Successfully'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => "Unable to add your Request"
+            ], 500);
         }
-        return redirect()->back()->with(session()->flash('alert-danger', 'Something went wrong. Please try again.'));
+        // if ($addresspost) {
+        //     return redirect()->back()->with(session()->flash('alert-success', 'Address Added Successfully!.'));
+        // }
+        // return redirect()->back()->with(session()->flash('alert-danger', 'Something went wrong. Please try again.'));
     }
     public function managePayments()
     {
@@ -1079,6 +1115,15 @@ class HomeController extends Controller
             return redirect()->back()->with(session()->flash('alert-danger', 'Something went wrong. Please try again.'));
         }
     }
+
+    public function deleteAddress($id)
+{
+    $address = Address::findOrFail($id);
+    $address->delete();
+
+    return response()->json(['message' => 'Address deleted successfully']);
+}
+
 
     //Address Details Get start
     public function getaddressdetails(Request $request)

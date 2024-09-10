@@ -17310,7 +17310,7 @@
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
   }
-  .category-box:hover {
+  /* .category-box:hover {
     background-color: rgba(0, 0, 0, 0);
   }
   .category-box:hover::after {
@@ -17322,7 +17322,7 @@
   }
   .category-box:hover h5 {
     color: #fff;
-  }
+  } */
   .category-box-2::after {
     background-image: url(../images/cake/bg.jpg);
   }

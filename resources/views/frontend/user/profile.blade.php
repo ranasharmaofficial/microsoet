@@ -1,7 +1,7 @@
  @extends('frontend.master')
  @section('content')
      <!-- Breadcrumb Section Start -->
-     <section class="breadcrumb-section pt-0">
+     {{-- <section class="breadcrumb-section pt-0">
          <div class="container-fluid-lg">
              <div class="row">
                  <div class="col-12">
@@ -21,7 +21,7 @@
                  </div>
              </div>
          </div>
-     </section>
+     </section> --}}
      <!-- Breadcrumb Section End -->
 
      <!-- User Dashboard Section Start -->
@@ -333,84 +333,90 @@
                                      </div>
 
                                      <div class="order-contain">
-                                         <div class="order-box dashboard-bg-box">
-                                             <div class="order-container">
-                                                 <div class="order-icon">
-                                                     <i data-feather="box"></i>
-                                                 </div>
+                                        @foreach ($combined_order as $item)
+                                            <div class="order-box dashboard-bg-box">
+                                                <div class="order-container">
+                                                    <div class="order-icon">
+                                                        <i data-feather="box"></i>
+                                                    </div>
 
-                                                 <div class="order-detail">
-                                                     <h4>Delivers <span>Pending</span></h4>
-                                                     <h6 class="text-content">Gouda parmesan caerphilly mozzarella
-                                                         cottage cheese cauliflower cheese taleggio gouda.</h6>
-                                                 </div>
-                                             </div>
+                                                    <div class="order-detail">
+                                                        <h4>Deliverss <span>Pending</span></h4>
+                                                        <p class="mt-2">Order Id : {{ $item->order_number}}</p>
+                                                        <h6 class="text-content">{{ $item->name}}</h6>
+                                                    </div>
+                                                </div>
+                                            @php
+                                                $order_details = \App\Models\OrderDetail::where('combined_order_id', $item->id)->get();
+                                            @endphp
+                                                @foreach ($order_details as $row)
+                                                    <div class="product-order-detail">
+                                                        <a href="product-left-thumbnail.html" class="order-image">
+                                                            <img src="../assets/images/vegetable/product/1.png"
+                                                                class="blur-up lazyload" alt="">
+                                                        </a>
 
-                                             <div class="product-order-detail">
-                                                 <a href="product-left-thumbnail.html" class="order-image">
-                                                     <img src="../assets/images/vegetable/product/1.png"
-                                                         class="blur-up lazyload" alt="">
-                                                 </a>
+                                                        <div class="order-wrap">
+                                                            <a href="product-left-thumbnail.html">
+                                                                <h3>{{$row->product->name}}</h3>
+                                                            </a>
+                                                            <p class="text-content">Cheddar dolcelatte gouda. Macaroni cheese
+                                                                cheese strings feta halloumi cottage cheese jarlsberg cheese
+                                                                triangles say cheese.</p>
+                                                            <ul class="product-size">
+                                                                <li>
+                                                                    <div class="size-box">
+                                                                        <h6 class="text-content">Price : </h6>
+                                                                        <h5>$20.68</h5>
+                                                                    </div>
+                                                                </li>
 
-                                                 <div class="order-wrap">
-                                                     <a href="product-left-thumbnail.html">
-                                                         <h3>Fantasy Crunchy Choco Chip Cookies</h3>
-                                                     </a>
-                                                     <p class="text-content">Cheddar dolcelatte gouda. Macaroni cheese
-                                                         cheese strings feta halloumi cottage cheese jarlsberg cheese
-                                                         triangles say cheese.</p>
-                                                     <ul class="product-size">
-                                                         <li>
-                                                             <div class="size-box">
-                                                                 <h6 class="text-content">Price : </h6>
-                                                                 <h5>$20.68</h5>
-                                                             </div>
-                                                         </li>
+                                                                <li>
+                                                                    <div class="size-box">
+                                                                        <h6 class="text-content">Rate : </h6>
+                                                                        <div class="product-rating ms-2">
+                                                                            <ul class="rating">
+                                                                                <li>
+                                                                                    <i data-feather="star" class="fill"></i>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <i data-feather="star" class="fill"></i>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <i data-feather="star" class="fill"></i>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <i data-feather="star" class="fill"></i>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <i data-feather="star"></i>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
 
-                                                         <li>
-                                                             <div class="size-box">
-                                                                 <h6 class="text-content">Rate : </h6>
-                                                                 <div class="product-rating ms-2">
-                                                                     <ul class="rating">
-                                                                         <li>
-                                                                             <i data-feather="star" class="fill"></i>
-                                                                         </li>
-                                                                         <li>
-                                                                             <i data-feather="star" class="fill"></i>
-                                                                         </li>
-                                                                         <li>
-                                                                             <i data-feather="star" class="fill"></i>
-                                                                         </li>
-                                                                         <li>
-                                                                             <i data-feather="star" class="fill"></i>
-                                                                         </li>
-                                                                         <li>
-                                                                             <i data-feather="star"></i>
-                                                                         </li>
-                                                                     </ul>
-                                                                 </div>
-                                                             </div>
-                                                         </li>
+                                                                <li>
+                                                                    <div class="size-box">
+                                                                        <h6 class="text-content">Sold By : </h6>
+                                                                        <h5>Fresho</h5>
+                                                                    </div>
+                                                                </li>
 
-                                                         <li>
-                                                             <div class="size-box">
-                                                                 <h6 class="text-content">Sold By : </h6>
-                                                                 <h5>Fresho</h5>
-                                                             </div>
-                                                         </li>
+                                                                <li>
+                                                                    <div class="size-box">
+                                                                        <h6 class="text-content">Quantity : </h6>
+                                                                        <h5>250 G</h5>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                         @endforeach
 
-                                                         <li>
-                                                             <div class="size-box">
-                                                                 <h6 class="text-content">Quantity : </h6>
-                                                                 <h5>250 G</h5>
-                                                             </div>
-                                                         </li>
-                                                     </ul>
-                                                 </div>
-                                             </div>
-                                         </div>
-
-                                         <div class="order-box dashboard-bg-box">
+                                         {{-- <div class="order-box dashboard-bg-box">
                                              <div class="order-container">
                                                  <div class="order-icon">
                                                      <i data-feather="box"></i>
@@ -640,7 +646,7 @@
                                                      </ul>
                                                  </div>
                                              </div>
-                                         </div>
+                                         </div> --}}
                                      </div>
                                  </div>
                              </div>
@@ -664,9 +670,10 @@
                                                  class="me-2"></i> Add New Address</button>
                                      </div>
 
-                                     <div class="row g-sm-4 g-3">
-                                         {{-- <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                                             <div class="address-box">
+                                     <div class="row g-sm-4 g-3 text-capitalize" id="callingAddress">
+                                         {{-- @foreach ($address as $item)
+                                         <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                                             <div class="address-box text-capitalize">
                                                  <div>
                                                      <div class="form-check">
                                                          <input class="form-check-input" type="radio" name="jack"
@@ -674,32 +681,32 @@
                                                      </div>
 
                                                      <div class="label">
-                                                         <label>Home</label>
+                                                         <label>{{ $item->address_type}}</label>
                                                      </div>
 
                                                      <div class="table-responsive address-table">
                                                          <table class="table">
                                                              <tbody>
                                                                  <tr>
-                                                                     <td colspan="2">Jack Jennas</td>
+                                                                     <td colspan="2">{{ $item->first_name}}{{ $item->last_name }}</td>
                                                                  </tr>
 
                                                                  <tr>
                                                                      <td>Address :</td>
                                                                      <td>
-                                                                         <p>8424 James Lane South San Francisco, CA 94080
+                                                                         <p>{{ $item->address}}
                                                                          </p>
                                                                      </td>
                                                                  </tr>
 
                                                                  <tr>
                                                                      <td>Pin Code :</td>
-                                                                     <td>+380</td>
+                                                                     <td>{{ $item->pin}}</td>
                                                                  </tr>
 
                                                                  <tr>
                                                                      <td>Phone :</td>
-                                                                     <td>+ 812-710-3798</td>
+                                                                     <td>+91 {{ $item->phone}}</td>
                                                                  </tr>
                                                              </tbody>
                                                          </table>
@@ -716,8 +723,9 @@
                                                  </div>
                                              </div>
                                          </div>
+                                         @endforeach --}}
 
-                                         <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                                         {{-- <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
                                              <div class="address-box">
                                                  <div>
                                                      <div class="form-check">
@@ -1191,7 +1199,8 @@
                                                              <tr>
                                                                  <td>Phone Number :</td>
                                                                  <td>
-                                                                     <a href="javascript:void(0)"> +91 {{ Auth::user()->phone }}</a>
+                                                                     <a href="javascript:void(0)"> +91
+                                                                         {{ Auth::user()->phone }}</a>
                                                                  </td>
                                                              </tr>
                                                              <tr>
@@ -1934,51 +1943,58 @@
                  </div>
                  <div class="modal-body">
                      <form id="addAddress" method="post"> @csrf
-                        <input type="hidden" name="user_id" value='{{ Auth::user()->id }}'>
+                         <input type="hidden" name="user_id" value='{{ Auth::user()->id }}'>
                          <div class="form-floating mb-4 theme-form-floating">
-                             <input type="text" class="form-control" name='first_name' id="fname" placeholder="Enter First Name">
+                             <input type="text" class="form-control" name='first_name' id="fname"
+                                 placeholder="Enter First Name">
                              <label for="fname">First Name</label>
                          </div>
-                     
+
                          <div class="form-floating mb-4 theme-form-floating">
-                             <input type="text" class="form-control" name='last_name' id="lname" placeholder="Enter Last Name">
+                             <input type="text" class="form-control" name='last_name' id="lname"
+                                 placeholder="Enter Last Name">
                              <label for="lname">Last Name</label>
                          </div>
                          <div class="form-floating mb-4 theme-form-floating">
-                             <input type="text" class="form-control" name='phone' id="phone" placeholder="Enter Last Name">
+                             <input type="text" class="form-control" name='phone' id="phone"
+                                 placeholder="Enter Last Name">
                              <label for="lname">Phone No.</label>
                          </div>
                          <div class="form-floating mb-4 theme-form-floating">
-                             <textarea class="form-control" name="address" placeholder="Leave a comment here" id="address" style="height: 100px"></textarea>
+                             <textarea class="form-control" name="address" placeholder="Leave a comment here" id="address"
+                                 style="height: 100px"></textarea>
                              <label for="address">Enter Address</label>
                          </div>
-                   
+
                          <div class="form-floating mb-4 theme-form-floating">
-                             <input type="number" class="form-control" name="pin" id="pin" placeholder="Enter Pin Code">
+                             <input type="number" class="form-control" name="pin" id="pin"
+                                 placeholder="Enter Pin Code">
                              <label for="pin">Pin Code</label>
                          </div>
                          <div class="form-floating mb-4 theme-form-floating">
-                             <input type="text" class="form-control" name="city" id="pin" placeholder="Enter Pin Code">
+                             <input type="text" class="form-control" name="city" id="pin"
+                                 placeholder="Enter Pin Code">
                              <label for="pin">City</label>
                          </div>
                          <div class="form-floating mb-4 theme-form-floating">
-                             <input type="text" class="form-control" name="state" id="pin" placeholder="Enter Pin Code">
+                             <input type="text" class="form-control" name="state" id="pin"
+                                 placeholder="Enter Pin Code">
                              <label for="pin">State</label>
                          </div>
                          <div class="form-floating mb-4 theme-form-floating">
-                            <select name="address_type" id="address_type" class="form-control">
-                                <option value="home">Home</option>
-                                <option value="office">Office</option>
-                            </select>
-                            <label for="address_type">Address Type</label>
+                             <select name="address_type" id="address_type" class="form-control">
+                                 <option value="home">Home</option>
+                                 <option value="office">Office</option>
+                             </select>
+                             <label for="address_type">Address Type</label>
                          </div>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-secondary btn-md" data-bs-dismiss="modal">Close</button>
-                     <button type="submit" class="btn theme-bg-color btn-md text-white" >Save
+                     <button type="submit" class="btn theme-bg-color btn-md text-white">Save
                          changes</button>
                  </div>
-                </form>
+                 </form>
              </div>
          </div>
      </div>
@@ -2134,43 +2150,215 @@
              </div>
          </div>
      </div>
-     <!-- Edit Profile End -->
-     <!-- jQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     {{-- edit address  --}}
+     <div class="modal fade theme-modal" id="editAddress" tabindex="-1">
+         <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel2">Edit Address</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal">
+                         <i class="fa-solid fa-xmark"></i>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     <form method="post" id="editForm">
+                         <input type="hidden" name="id" id="edit-id">
+                         <input type="text" name="user_id" value='{{ Auth::user()->id }}'>
+                         <div class="form-floating mb-4 theme-form-floating">
+                             <input type="text" class="form-control" name='first_name' id="edit-fname"
+                                 placeholder="Enter First Name">
+                             <label for="edit-fname">First Name</label>
+                         </div>
+                         <!-- Add other form fields as necessary -->
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-animation btn-md fw-bold"
+                                 data-bs-dismiss="modal">Close</button>
+                             <button type="submit" class="btn theme-bg-color btn-md fw-bold text-light">Save
+                                 changes</button>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
 
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script>
-        $(document).ready(function() {
-            // Insert application details
-            $("#addAddress").submit(function(e) {
-                e.preventDefault();
-                let formData = new FormData(this);
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('addAddress') }}",
-                    data: formData,
-                    dataType: "JSON",
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(response) {
-                        swal("Success", response.message, "success");
-                        $("#addAddress").trigger("reset");
-                        window.open("/profile", "_self");
-                    },
-                    error: function(xhr) {
-                        $('.error-message').html('');
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.errors;
-                            $('.error-message').html(''); // Clear previous error messages
-                            $.each(errors, function(key, value) {
-                                $('#error-' + key).html(value[0]).show();
-                            });
-                        } else {
-                            alert('An error occurred. Please try again.');
-                        }
-                    }
-                });
-            });
-        })
-    </script>
+         $(document).ready(function() {
+             // Insert application details
+             $("#addAddress").submit(function(e) {
+                 e.preventDefault();
+                 let formData = new FormData(this);
+                 $.ajax({
+                     type: "POST",
+                     url: "{{ route('addAddress') }}",
+                     data: formData,
+                     dataType: "JSON",
+                     contentType: false,
+                     cache: false,
+                     processData: false,
+                     success: function(response) {
+                         swal("Success", response.message, "success");
+                         $("#addAddress").trigger("reset");
+                         window.open("/profile", "_self");
+                     },
+                     error: function(xhr) {
+                         $('.error-message').html('');
+                         if (xhr.status === 422) {
+                             var errors = xhr.responseJSON.errors;
+                             $('.error-message').html(''); // Clear previous error messages
+                             $.each(errors, function(key, value) {
+                                 $('#error-' + key).html(value[0]).show();
+                             });
+                         } else {
+                             alert('An error occurred. Please try again.');
+                         }
+                     }
+                 });
+             });
+
+             // Function to fetch and display addresses
+             let callingData = () => {
+                 $.ajax({
+                     type: "GET",
+                     url: "{{ route('address.index') }}",
+                     success: function(response) {
+                         let table = $("#callingAddress");
+                         table.empty();
+                         let data = response.data;
+
+                         // Update address count
+                         let len = data.length;
+                         $("#counting").html(len);
+
+                         data.forEach((data) => {
+                             table.append(`
+                        <div class="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                            <div class="address-box">
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="jack" id="flexRadioDefault3">
+                                    </div>
+
+                                    <div class="label">
+                                        <label>${data.address_type}</label>
+                                    </div>
+
+                                    <div class="table-responsive address-table">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2">${data.first_name} ${data.last_name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Address :</td>
+                                                    <td>
+                                                        <p>${data.address}, ${data.city}, ${data.state}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pin Code :</td>
+                                                    <td>${data.pin}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Phone :</td>
+                                                    <td>${data.phone}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-sm add-button w-100 editBtn" data-bs-toggle="modal" data-id="${data.id}" data-bs-target="#editAddress">
+                                        <i data-feather="edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm add-button w-100 delete-btn" type="button" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#removeProfile">
+                                        <i data-feather="trash-2"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                         });
+                     },
+                     error: function(xhr, status, error) {
+                         console.error('Error:', error);
+                     }
+                 });
+             }
+
+             // Edit Address
+             $(document).on('click', '.editBtn', function() {
+                 let id = $(this).data('id');
+                 $.ajax({
+                     type: 'GET',
+                     url: `/address/view/${id}`,
+                     success: function(response) {
+                         let address = response.data;
+                         $('#edit-id').val(address.id);
+                         $('#edit-fname').val(address.first_name);
+                         $('#edit-lname').val(address.last_name);
+                         $('#edit-phone').val(address.phone);
+                         $('#edit-state').val(address.state);
+                         $('#edit-city').val(address.city);
+                         $('#edit-address').val(address.address);
+                         $('#edit-pin').val(address.pin);
+                         $('#edit-house_no').val(address.house_no);
+                         $('#edit-area').val(address.area);
+                         $('#editAddress').modal('show');
+                     },
+                     error: function(xhr, status, error) {
+                         console.error('Error fetching address details for editing:', error);
+                     }
+                 });
+             });
+
+             $('#editForm').submit(function(e) {
+                 e.preventDefault();
+                 let id = $('#edit-id').val();
+                 let formData = $(this).serialize();
+
+                 $.ajax({
+                     type: 'PUT',
+                     url: `/address/update/${id}`,
+                     data: formData,
+                     success: function(response) {
+                         swal("Success", response.message, "success");
+                         $('#editAddress').modal('hide');
+                         callingData(); // Refresh the address list
+                     },
+                     error: function(xhr, status, error) {
+                         console.error('Error updating address:', error);
+                     }
+                 });
+             });
+
+             // Delete Address
+             $(document).on('click', '.delete-btn', function() {
+                 let id = $(this).data('id');
+
+                 if (confirm("Are you sure you want to delete this address?")) {
+                     $.ajax({
+                         type: 'DELETE',
+                         url: `/address-delete/${id}`,
+                         headers: {
+                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                         },
+                         success: function(response) {
+                             swal("Success", response.message, "success");
+                             callingData(); // Refresh the address list
+                         },
+                         error: function(xhr, status, error) {
+                             console.error('Error deleting address:', error);
+                         }
+                     });
+                 }
+             });
+
+             // Initial call to populate address data
+             callingData();
+         });
+     </script>
  @endsection

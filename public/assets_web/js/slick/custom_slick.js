@@ -52,19 +52,23 @@ $('.category-slider-2').slick({
     responsive: [{
         breakpoint: 1745,
         settings: {
-            slidesToShow: 10,
+            slidesToShow: 14,
             dots: false,
-            autoplay: false,
-            autoplaySpeed: 11500,
-        }
+            infinite: true,  // Ensures the slider loops continuously
+            autoplay: true,
+            autoplaySpeed: 0,  // No delay between transitions
+            speed: 5000,  // Slow, continuous movement
+            cssEase: 'linear',  // Constant speed, no easing
+            pauseOnHover: false,  // Prevents the slider from pausing on hover
+    }
     },
     {
         breakpoint: 1540,
         settings: {
-            slidesToShow: 10,
+            slidesToShow: 14,
             dots: false,
             autoplay: true,
-            autoplaySpeed: 4500,
+            autoplaySpeed: 500,
         }
     },
     {
