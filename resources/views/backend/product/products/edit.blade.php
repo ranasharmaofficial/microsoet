@@ -274,6 +274,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-from-label">{{translate('Vendor price')}}</label>
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="{{translate('Vendor price')}}" name="vendor_price" class="form-control" value="{{$product->vendor_price}}" required>
+                            </div>
+                        </div>
+
                         @php
                           $start_date = date('d-m-Y H:i:s', $product->discount_start_date);
                           $end_date = date('d-m-Y H:i:s', $product->discount_end_date);

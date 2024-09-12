@@ -8,6 +8,9 @@
             <td class="text-center">
                 {{translate('Variant Price')}}
             </td>
+            <td class="text-center">
+				{{translate('Vendor Variant Price')}}
+			</td>
             <td class="text-center" data-breakpoints="lg">
                 {{translate('SKU')}}
             </td>
@@ -73,6 +76,21 @@
                            @endphp" min="0" step="0.01" class="form-control" required>
                 </td>
                 <td>
+                    <input type="number" lang="en" name="vendor_price_{{ $str }}" value="@php
+                            if ($product->vendor_price == $vendor_price) {
+                                if($stock != null){
+                                    echo $stock->vendor_price;
+                                }
+                                else {
+                                    echo $vendor_price;
+                                }
+                            }
+                            else{
+                                echo $vendor_price;
+                            }
+                           @endphp" min="0" step="0.01" class="form-control" required>
+                </td>
+                <td>
                     <input type="text" name="sku_{{ $str }}" value="@php
                             if($stock != null) {
                                 echo $stock->sku;
@@ -93,7 +111,7 @@
                            @endphp" min="0" step="1" class="form-control" required>
                 </td>
                 <td>
-                    <div class=" input-group " data-toggle="aizuploader" data-type="image">
+                    <div class="input-group " data-toggle="aizuploader" data-type="image">
                         <div class="input-group-prepend">
                             <div class="input-group-text bg-soft-secondary font-weight-medium">{{ translate('Browse') }}</div>
                         </div>
