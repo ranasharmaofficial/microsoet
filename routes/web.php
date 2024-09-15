@@ -348,12 +348,16 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function () {
     Route::post('updateProfile', 'HomeController@updateProfile')->name('updateProfile');
     Route::get('my_addressbook', 'HomeController@myAddressBook')->name('my_addressbook');
     Route::get('my-bank-details', 'HomeController@bankDetail')->name('my-bank-details');
+    Route::get('address-index', 'HomeController@addressIndex')->name('address.index');
     Route::post('addAddress', 'HomeController@addAddress')->name('addAddress');
     Route::post('checkLogin', 'HomeController@checkLogin')->name('checkLogin');
-    Route::post('getaddressdetails', 'HomeController@getaddressdetails')->name('getaddressdetails');
-    Route::post('updateAddressDetails', 'HomeController@updateAddressDetails')->name('updateAddressDetails');
+    // Route::post('getaddressdetails', 'HomeController@getaddressdetails')->name('getaddressdetails');
+    // Route::post('updateAddressDetails', 'HomeController@updateAddressDetails')->name('updateAddressDetails');
     Route::post('setDefaultAddress', 'HomeController@setDefaultAddress')->name('setDefaultAddress');
     Route::post('removeMyAddress', 'HomeController@removeMyAddress')->name('removeMyAddress');
+    
+    Route::put('/address/update/{id}', 'HomeController@updateAddressDetails');
+    Route::delete('/address-delete/{id}', 'HomeController@deleteAddress')->name('deleteAddress');
     Route::get('manage-payments', 'HomeController@managePayments')->name('manage-payments');
     Route::post('addPaymentCards', 'HomeController@addPaymentCards')->name('addPaymentCards');
     Route::get('change-password', 'HomeController@changePassword')->name('change-password');

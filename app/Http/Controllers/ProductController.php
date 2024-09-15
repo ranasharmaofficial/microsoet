@@ -236,6 +236,7 @@ class ProductController extends Controller
         $product->video_provider = $request->video_provider;
         $product->video_link = $request->video_link;
         $product->unit_price = $request->unit_price;
+        $product->vendor_price = $request->vendor_price;
         $product->discount = $request->discount;
         $product->discount_type = $request->discount_type;
 
@@ -456,6 +457,7 @@ class ProductController extends Controller
 
                 $product_stock->variant = $str;
                 $product_stock->price = $request['price_'.str_replace('.', '_', $str)];
+                $product_stock->vendor_price = $request['vendor_price_'.str_replace('.', '_', $str)];
                 $product_stock->sku = $request['sku_'.str_replace('.', '_', $str)];
                 $product_stock->qty = $request['qty_'.str_replace('.', '_', $str)];
                 $product_stock->image = $request['img_'.str_replace('.', '_', $str)];
@@ -467,6 +469,7 @@ class ProductController extends Controller
             $product_stock->product_id  = $product->id;
             $product_stock->variant     = '';
             $product_stock->price       = $request->unit_price;
+            $product_stock->vendor_price       = $request->vendor_price;
             $product_stock->sku         = $request->sku;
             $product_stock->qty         = $request->current_stock;
             $product_stock->save();
@@ -783,6 +786,7 @@ class ProductController extends Controller
 
                     $product_stock->variant = $str;
                     $product_stock->price = $request['price_'.str_replace('.', '_', $str)];
+                    $product_stock->vendor_price = $request['vendor_price_'.str_replace('.', '_', $str)];
                     $product_stock->sku = $request['sku_'.str_replace('.', '_', $str)];
                     $product_stock->qty = $request['qty_'.str_replace('.', '_', $str)];
                     $product_stock->image = $request['img_'.str_replace('.', '_', $str)];
@@ -796,6 +800,7 @@ class ProductController extends Controller
             $product_stock->product_id  = $product->id;
             $product_stock->variant     = '';
             $product_stock->price       = $request->unit_price;
+            $product_stock->vendor_price       = $request->vendor_price;
             $product_stock->sku         = $request->sku;
             $product_stock->qty         = $request->current_stock;
             $product_stock->save();
@@ -1051,6 +1056,7 @@ class ProductController extends Controller
         }
 
         $unit_price = $request->unit_price;
+        $vendor_price = $request->vendor_price;
         $product_name = $request->name;
 
         if($request->has('choice_no')){
@@ -1067,7 +1073,7 @@ class ProductController extends Controller
         }
 
         $combinations = Combinations::makeCombinations($options);
-        return view('backend.product.products.sku_combinations', compact('combinations', 'unit_price', 'colors_active', 'product_name'));
+        return view('backend.product.products.sku_combinations', compact('combinations','vendor_price', 'unit_price', 'colors_active', 'product_name'));
     }
 
     public function sku_combination_edit(Request $request)

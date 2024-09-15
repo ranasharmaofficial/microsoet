@@ -59,11 +59,12 @@ if(auth()->user() != null) {
 											@endif
 
                                             </ul>
+                                            @if(isset($cart) && count($cart) > 0)
                                             <div class="price-box">
                                                 <h5>Total :</h5>
                                                 <h4 class="theme-color fw-bold">₹ {{ $sumcartamount }}</h4>
                                             </div>
-                                            @if(count($cart) > 0)
+                                            
                                             <div class="button-group">
                                                 <a href="{{ url('cart') }}" class="btn btn-sm cart-button">View Cart</a>
                                                 <a href="{{ url('checkout') }}" class="btn btn-sm cart-button theme-bg-color text-white">Checkout</a>

@@ -10,7 +10,7 @@
 @section('content')
 
 
-<div class="category-slider-2 product-wrapper no-arrow">
+<div style="margin-top:-32px;" class="category-slider-2 product-wrapper no-arrow">
     @foreach (\App\Models\Category::get() as $category)
     <div>
         <a href="{{ route('products.category', $category->slug) }}" class="category-box category-dark bg-transparent mt-0">
@@ -27,7 +27,7 @@
 </div>
 
 <!-- Home Section Start -->
-    <section class="home-section pt-2">
+    <section class="home-section pt-0">
         <div class="container-fluid-lg p-0 m-0">
             <div class="row g-4 m-0 p-0">
                 <div class="col-xl-2 ratio_65 d-none d-md-block">

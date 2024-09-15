@@ -214,6 +214,13 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-md-3 col-from-label">{{translate('Vendor price')}} <span class="text-danger">*</span></label>
+                            <div class="col-md-6">
+                                <input type="number" lang="en" min="0" value="0" step="0.01" placeholder="{{ translate('Vendor price') }}" name="vendor_price" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
 	                        <label class="col-sm-3 control-label" for="start_date">{{translate('Discount Date Range')}}</label>
 	                        <div class="col-sm-9">
 	                          <input type="text" class="form-control aiz-date-range" name="date_range" placeholder="{{translate('Select Date')}}" data-time-picker="true" data-format="DD-MM-Y HH:mm:ss" data-separator=" to " autocomplete="off">

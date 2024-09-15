@@ -360,13 +360,14 @@
                         <h3 class="py-2 fw-bold">Login</h3>
                         <span class="py-2 d-inline-block" style="color:#a68f8f">Welcome back! Sign in to your account.</span>
                         <input type="number" placeholder="Enter Your Mobile Number" required class="login-number-login" pattern="[0-9]{1}" inputmode="numeric" name="phone">
-                        <button type="button" class="login-btn" id="login-send-otp">Send one time password</button>
+                        
                         <div id="login-otp-input-box" class="w-full" style="display:none;">
                             <div class="form-group w-full">
                                 <input type="tel" class="form-control border rounded mt-3" name="otp" id="login-otp-input" placeholder="Enter OTP*" disabled required>
                             </div>
                             <div id="timer" class="text-center text-success"></div>
                         </div>
+                        <button type="submit" class="login-btn mt-2 " id="login-send-otp">Send one time password</button>
                     </form>
                     <form id="signup-form" class="form">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -375,7 +376,7 @@
                             <span class="py-2 d-inline-block" style="color:#a68f8f">Create new account today and reap the benefits of a personalized shopping experience</span>
                             <input type="text" class="form-control" name="name" placeholder="Your Name" required>
                         </div>
-                        <div class="form-group otp-box w-100">
+                        <div class="form-group otp-box w-100 mt-3">
                             <div class="col-12 col-md-12 col-lg-8 form_pr_zero one-tgw pe-2">
                                 <div class="form-group" style="position:relative;">
                                     <input type="tel" class="form-control" name="phone" maxlength="10" id="r_phone" placeholder="Mobile" required>
@@ -391,7 +392,7 @@
                                 <input type="text" class="form-control" name="otp" id="otp-input" placeholder="Enter Your OTP*" disabled required>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center mt-3">
                             <button type="submit" class="theme-btn"><i class="far fa-paper-plane create-account" id="create-account"></i> Register</button>
                         </div>
                     </form>

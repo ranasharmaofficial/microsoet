@@ -1,6 +1,14 @@
+<style>
+    #header_bg {
+        background: rgb(50, 95, 227);
+        background: linear-gradient(90deg, rgba(50, 95, 227, 0.8044467787114846) 20%, rgba(199, 45, 45, 1) 100%, rgba(0, 212, 255, 1) 100%);
+        opacity: none;
+    }
+
+</style>
 <!-- Header Start -->
-<header class="pb-md-4 pb-0 ">
-    <div class="top-nav top-header sticky-header fixed-top">
+<header class="pb-0 ">
+    <div id="header_bg"  class="top-nav top-header sticky-header fixed-top">
         <div class="container-fluid-lg">
             <div class="row">
                 <div class="col-12">
@@ -12,8 +20,8 @@
                             </span>
                         </button>
                         <a href="{{ url('') }}" class="web-logo nav-logo">
-                            <img src="{{ asset('public/assets_web/images/logo 78.png') }}"
-                                class="img-fluid blur-up lazyload" alt="">
+                            <img src="{{ asset('public/assets_web/images/logo.png') }}"
+                                class="img-fluid blur-up lazyload" alt="" style="width:14rem">
                         </a>
                         <div class="middle-box">
                             <div class="location-box">
@@ -26,7 +34,8 @@
                             </div>
                             <div class="search-box">
                                 <div class="input-group">
-                                    <input type="search" style="border: transparent;" class="form-control" placeholder="I'm searching for...">
+                                    <input type="search" style="border: transparent;" class="form-control"
+                                        placeholder="I'm searching for...">
                                     <button class="btn" type="button" id="button-addon2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -129,30 +138,30 @@
                                             <h5>My Account</h5>
                                         </div>
                                     </div>
-                                    @if (Auth::check() && (Auth::user()->user_type!=='admin'))
-                                    <div class="onhover-div onhover-div-login">
-                                        <ul class="user-box-name">
-                                            <li class="product-box-contain">
-                                                <i></i>
-                                                <a href={{ url('profile') }}>My Profile </a>
-                                            </li>
-                                            <li class="product-box-contain">
-                                                <i></i>
-                                                <a href={{url('logout')}}>Logout</a>
-                                            </li>
+                                    @if (Auth::check() && Auth::user()->user_type !== 'admin')
+                                        <div class="onhover-div onhover-div-login">
+                                            <ul class="user-box-name">
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href={{ url('profile') }}>My Profile </a>
+                                                </li>
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href={{ url('logout') }}>Logout</a>
+                                                </li>
 
-                                        </ul>
-                                    </div>
+                                            </ul>
+                                        </div>
                                     @else
                                         <div class="onhover-div onhover-div-login">
                                             <ul class="user-box-name">
                                                 <li class="product-box-contain">
                                                     <i></i>
-                                                    <a href={{url('/login')}}>User Login</a>
+                                                    <a href={{ url('/login') }}>User Login</a>
                                                 </li>
                                                 <li class="product-box-contain">
                                                     <i></i>
-                                                    <a href={{url('/vendor-login')}}>Vendor Login</a>
+                                                    <a href={{ url('/vendor-login') }}>Vendor Login</a>
                                                 </li>
 
                                             </ul>
@@ -166,7 +175,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid-lg header-bottom-s  d-md-block">
+    <div style="margin-top:84px; padding-top:22px ; padding-bottom:10px" class="container-fluid-lg header-bottom-s   d-md-block">
         <div class="row">
             <div class="col-12">
                 <div class="header-nav">
@@ -190,47 +199,49 @@
                                 </button>
                             </div>
                             <ul class="category-list" id="callingAllCategory">
-							 @foreach (\App\Models\Category::where('parent_id', 0)->get() as $key => $category)
-                                <li class="onhover-category-list">
-                                    <a href="" class="category-name">
-                                        <img src="{{ uploaded_asset($category->icon) }}"
-                                            alt="">
-                                        <h6>{{ $category->name }}</h6>
-                                        <i class="fa-solid fa-angle-right"></i>
-                                    </a>
+                                @foreach (\App\Models\Category::where('parent_id', 0)->get() as $key => $category)
+                                    <li class="onhover-category-list">
+                                        <a href="" class="category-name">
+                                            <img src="{{ uploaded_asset($category->icon) }}" alt="">
+                                            <h6>{{ $category->name }}</h6>
+                                            <i class="fa-solid fa-angle-right"></i>
+                                        </a>
 
-                                    <div class="onhover-category-box">
-                                        @foreach (\App\Models\Category::where('parent_id', $category->id)->get() as $subcat)
-										@php
-										  $chcatex = \App\Models\Category::where('parent_id', $subcat->id)->exists();
-										@endphp
-                                        <div class="list-1">
-                                            <div class="category-title-box">
-                                                <h5>{{$subcat->name}}</h5>
-                                            </div>
-											@if ($chcatex)
-                                            <ul>
-												@foreach (\App\Models\Category::where('parent_id', $subcat->id)->get() as $chcat)
-													<li>
-														<a href="{{ route('products.category', $chcat->slug)}}">{{$chcat->name}}</a>
-													</li>
-												@endforeach
-                                            </ul>
-											 @endif
+                                        <div class="onhover-category-box">
+                                            @foreach (\App\Models\Category::where('parent_id', $category->id)->get() as $subcat)
+                                                @php
+                                                    $chcatex = \App\Models\Category::where(
+                                                        'parent_id',
+                                                        $subcat->id,
+                                                    )->exists();
+                                                @endphp
+                                                <div class="list-1">
+                                                    <div class="category-title-box">
+                                                        <h5>{{ $subcat->name }}</h5>
+                                                    </div>
+                                                    @if ($chcatex)
+                                                        <ul>
+                                                            @foreach (\App\Models\Category::where('parent_id', $subcat->id)->get() as $chcat)
+                                                                <li>
+                                                                    <a
+                                                                        href="{{ route('products.category', $chcat->slug) }}">{{ $chcat->name }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+
                                         </div>
-                                        @endforeach
+                                    </li>
+                                @endforeach
 
-                                    </div>
-                                </li>
-							@endforeach
-
-                                <li class="onhover-category-list">
+                                {{-- <li class="onhover-category-list">
                                     <a href="javascript:void(0)" class="category-name">
-                                        <!-- <img src="images/svg/1/grocery" alt=""> -->
                                         <h6>More....</h6>
                                         <i class="fa-solid fa-angle-right"></i>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -524,8 +535,7 @@
         <div class="row">
             <div class="col-xxl-3 d-xxl-block d-none">
                 <div class="top-left-header">
-                    <span class="text-white"><i class="fa fa-map-marker" aria-hidden="true"></i>Purnea, Bihar, 854301
-                    </span>
+                    <span class="text-white"></span>
                 </div>
             </div>
             {{-- <div class="col-xxl-6 col-lg-9 d-lg-block d-none">
@@ -592,4 +602,3 @@
     </ul>
 </div>
 <!-- mobile fix menu end -->
-

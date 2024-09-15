@@ -1502,7 +1502,11 @@
                                     </div>
                                     <div class="profile-name-detail">
                                         <div class="d-sm-flex align-items-center d-block">
+<<<<<<< HEAD
+                                            <h3>Vicki E. Popee</h3>
+=======
                                             <h3>Vicki E. Pope</h3>
+>>>>>>> c40b176a8e8aa3cbc1ba88487c1f8da60914653f
                                             <div class="product-rating profile-rating">
                                                 <ul class="rating">
                                                     <li>
